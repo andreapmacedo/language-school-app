@@ -1,6 +1,6 @@
 import './App.css'
 // import Home from './pages/Home'
-import Questions from './pages/Questions'
+import Questions from './pages/QuestionForm'
 
 function App() {
   

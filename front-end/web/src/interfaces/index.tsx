@@ -1,4 +1,5 @@
 export interface IAnswer {
+  id?: string;
   answer: string;
   correct: boolean;
 }
@@ -15,4 +16,14 @@ export interface IQuestionQuery {
   answers: IAnswer[];
   themes: string[];
   tags: string[];
+}
+
+export interface ITagQuery {
+  id?: string;
+  tag: string;
+}
+
+export interface IThemeQuery {
+  id?: string;
+  theme: string;
 }

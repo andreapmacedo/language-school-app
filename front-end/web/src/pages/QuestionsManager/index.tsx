@@ -1,18 +1,32 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IQuestionQuery } from "../../interfaces";
 import { getQuestions,
   removeAll,
   removeQuestion,
-} from "../../firebase/firestore";
+} from "../../firebase/questions";
+
+import Modal from "react-modal";
+
+Modal.setAppElement('#root');
 
 const QuestionsManager = () => {
   
   const [questions, setQuestions] = useState([] as IQuestionQuery[]);
   
   
-  useEffect(() => {
-    console.log('questions: ');
-    
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    // setModalModeUpdate(false)
+    // setTask(schedule);
+  }
+
+  useEffect(() => {    
     const getQuestionsFromFirestore = async () => {
       const questions = await getQuestions();
       setQuestions(questions);
@@ -41,7 +55,6 @@ const QuestionsManager = () => {
             </button>
             <button
               onClick={() => {
-                console.log("delete");
                 removeOne(question.id);
               }}
             >  Delete  </button>
@@ -53,6 +66,25 @@ const QuestionsManager = () => {
 
           
       </div>
+
+
+      <button onClick={openModal}>Adicionar Tarefa</button>
+          <div>
+            <Modal
+              isOpen={modalIsOpen}
+              // closeTimeoutMS={10000}
+              onRequestClose={closeModal}
+              contentLabel="Example Modal"
+              overlayClassName="modal-overlay"
+              className="modal-content"
+            >
+              <h1>TaskArea</h1>
+              <p>Title</p>
+              <button className="modal-close" onClick={closeModal}>close</button>
+            </Modal>
+          </div>
+
+
     </div>
   );
 };

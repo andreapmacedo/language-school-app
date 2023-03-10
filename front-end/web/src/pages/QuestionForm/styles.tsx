@@ -8,7 +8,7 @@ export const Container = styled.div`
   
 `;
 
-export const Form = styled.form`
+export const Form = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px;

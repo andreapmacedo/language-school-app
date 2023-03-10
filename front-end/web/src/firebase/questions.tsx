@@ -2,7 +2,7 @@ import { db } from './config';
 
 import { IQuestionQuery } from '../interfaces';
 
-export async function addQuestionBy(query: IQuestionQuery): Promise<void> {
+export async function addQuestion(query: IQuestionQuery): Promise<void> {
   try {
     const docRef = await db.collection('questions').add(query);
     console.log('Question added with ID: ', docRef.id);

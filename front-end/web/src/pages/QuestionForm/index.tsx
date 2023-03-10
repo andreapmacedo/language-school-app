@@ -1,21 +1,21 @@
-import { useState, useEffect, useContext } from 'react';
-import { db } from '../../firebase/config';
-// import { addQuestion, addQuestionBy } from '../../firebase/firestore';
-import { addQuestionBy } from '../../firebase/firestore';
+import { useState, useEffect } from 'react';
+import { addQuestion } from '../../firebase/questions';
+import { addTagToDB, getTagsFromDB } from '../../firebase/tags';
+import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
+import Modal from "react-modal";
 
-// import ProductCard from '../../components/ProductCard';
 // import Header from '../../components/Header';
+// import GenericModal from '../../components/GenericModal';
 
 // import { GlobalContext } from '../../providers/GlobalProvider';
-import { Container, CardContainer } from './styles';
+import { Container, Form } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
 
+Modal.setAppElement('#root');
 
-const Questions = () => {
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+const QuestionForm = () => {
   
   const initialQuery: IQuestionQuery = {
     category: '',
@@ -28,6 +28,7 @@ const Questions = () => {
     answers: [],
     themes: [],
     tags: [],
+    // createdAt: firebase.firestore.Timestamp;
   };
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
@@ -38,6 +39,23 @@ const Questions = () => {
   const [answers, setAnswers] = useState<IAnswer[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [themes, setThemes] = useState<string[]>([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [dbTags, setDbTags] = useState<string[]>([]);
+  const [dbThemes, setDbThemes] = useState<string[]>([]);
+
+  const [modalSearchTag, setModalSearchTag] = useState('');
+
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    // setModalModeUpdate(false)
+    // setTask(schedule);
+  }
 
   function addAnswer(): void {
     const newAnswer: IAnswer = { answer, correct: isCorrect };
@@ -45,13 +63,20 @@ const Questions = () => {
     setAnswer('');
   }
 
-  function addTag(): void {
+  function addTagToQuestion(): void {
     setTags([...tags, tag]);
+    // addTagToDB({tag});
+    // setTag('');
+  }
+
+  function addTagToData(): void {
+    addTagToDB({tag});
     setTag('');
   }
 
   function addTheme(): void {
     setThemes([...themes, theme]);
+    addThemeToDB({theme});
     setTheme('');
   }
 
@@ -61,7 +86,7 @@ const Questions = () => {
     //   return false;
     // }
     if (queryAdd.question === '') {
-      alert('Please enter an category');
+      alert('Please enter an question');
       return false;
     }
     if (answers.length < 2) {
@@ -101,6 +126,27 @@ const Questions = () => {
     });
   }, [tags]);
 
+  /**
+   * Get tags from DB when component is mounted
+   */
+  useEffect(() => {
+    getTagsFromDB().then((tags) => {
+      setDbTags(tags);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   getTagsFromDB().then((tags) => {
+  //     setDbTags(tags);
+  //   });
+  // }, [addTagToData]);
+
+  useEffect(() => {
+    getThemesFromDB().then((themes) => {
+      setDbThemes(themes);
+    });
+  }, []);
+
   const handleQueryAddInput = ({target} : any) => {
     const { value, name } = target;
     // if (name === 'title') {
@@ -119,7 +165,7 @@ const Questions = () => {
   const handleSubmit = () => {
     console.log('handleSubmit');
     if (validateInputs()) {
-      addQuestionBy(queryAdd);
+      addQuestion(queryAdd);
       setDefault();
     }
   }
@@ -143,52 +189,23 @@ const Questions = () => {
   }
 
 
+  const handleSearchTag = (e: any) => {
+    setModalSearchTag(e.target.value);
+    // dbTags.filter((tag) => tag.includes(modalSearchTag));
+    // setDbTags(dbTags.filter(({tag}) => tag.includes(modalSearchTag)));
+
+  }
+  
+
+
   return (
     
     <Container>
     {/* //   <Header /> */}
-      {error && <p>Something went wrong ...</p>}
-      {loading && <p>Loading...</p>}
-      <form
+      <Form
         // onSubmit={handleSubmit}
       >
-        <label htmlFor='category'>
-          Category:
-          <input 
-            type="text"
-            name="category"
-            value={queryAdd.category}
-            onChange={handleQueryAddInput}
-          />
-        </label>
-        <label htmlFor='difficulty'>
-          Difficulty:
-          <input
-            type="text"
-            name="difficulty"
-            value={queryAdd.difficulty}
-            onChange={handleQueryAddInput}
-          />
-        </label>
-        <label htmlFor='type'>
-          Type:
-          <input
-            type="text"
-            name="type"
-            value={queryAdd.type}
-            onChange={handleQueryAddInput}
-          />
-        </label>
-        <label htmlFor='level'>
-          Level:
-          <input
 
-            type="text"
-            name="level"
-            value={queryAdd.level}
-            onChange={handleQueryAddInput}
-          />
-        </label>
         <label htmlFor='question'>
           Question:
           <input
@@ -198,6 +215,159 @@ const Questions = () => {
             onChange={handleQueryAddInput}
           />
         </label>
+
+        <div>
+          <label htmlFor='category'>
+            Category:
+            <input 
+              type="text"
+              name="category"
+              value={queryAdd.category}
+              onChange={handleQueryAddInput}
+            />
+          </label>
+          <label htmlFor='difficulty'>
+            Difficulty:
+            <input
+              type="text"
+              name="difficulty"
+              value={queryAdd.difficulty}
+              onChange={handleQueryAddInput}
+            />
+          </label>
+          <label htmlFor='type'>
+            Type:
+            <input
+              type="text"
+              name="type"
+              value={queryAdd.type}
+              onChange={handleQueryAddInput}
+            />
+          </label>
+          <label htmlFor='level'>
+            Level:
+            <input
+              type="text"
+              name="level"
+              value={queryAdd.level}
+              onChange={handleQueryAddInput}
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor='answers'>
+            Answers:
+            {
+              answers.map((answer, index) => (
+                <div key={index}>
+                  <p>{answer.answer}</p>
+                  {answer.correct && <p>Resposta correta</p>}
+                  <p onClick={() => removeAnswer(index)} >x</p>
+                </div>
+              ))
+            }
+          </label>
+          <button
+              type="button"
+              onClick={() => addAnswer()}
+            >
+              Add Answers
+          </button>      
+        </div>
+        
+        <div>
+          <label htmlFor='tags'>
+            Tags:
+          {
+            tags.map((tag, index) => (
+              <div key={index}>
+                <p>{tag}</p>
+                <p onClick={() => removeTag(index)} >x</p>
+              </div>
+            ))
+          }
+          </label>
+          <button
+              type="button"
+              onClick={() => addTagToQuestion()}
+            >
+              Add tags
+          </button>        
+
+          <button onClick={openModal}>Adicionar tag no modal</button>
+          <div>
+            <Modal
+              isOpen={modalIsOpen}
+              // closeTimeoutMS={10000}
+              onRequestClose={closeModal}
+              contentLabel="Add Answer"
+              overlayClassName="modal-overlay"
+              className="modal-content"
+            >
+              <h1>Adicionar tag</h1>
+              <div>
+                <label htmlFor='tags'>
+                  Tags:
+                <input
+                  type="text"
+                  name="tags"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                  />
+                </label>
+                <label htmlFor='search tags'>
+                  Search Tags:
+                <input
+                  type="text"
+                  name="search_tag"
+                  value={modalSearchTag}
+                  // onChange={(e) => setModalSearchTag(e.target.value)}
+                  // onChange={handleSearchTag}
+                  />
+                </label>
+                <button
+                    type="button"
+                    onClick={() => addTagToData()}
+                  >
+                    Adicionar Tag
+                </button>
+                <div>
+                  {dbTags?.map(({tag}, index) => (
+                    <div key={index}>
+                      <p>{tag}</p>
+                      {/* <p onClick={() => removeTag(index)} >x</p> */}
+                    </div>
+                  ))}
+                </div>
+              </div>              
+              <button className="modal-close" onClick={closeModal}>close</button>
+            </Modal>
+          </div>
+
+
+        </div>
+        <div>
+          <label htmlFor='themes'>
+            Themes:
+            {
+            themes.map((theme, index) => (
+              <div key={index}>
+                <p>{theme}</p>
+                <p onClick={() => removeTheme(index)} >x</p>
+              </div>
+            ))
+          }
+          <button
+            type="button"
+            onClick={() => addTheme()}
+          >
+            Add themes
+          </button>    
+          </label>
+        </div>
+        
+          {/* <GenericModal></GenericModal> */}
+
         <button
           type="button"
           onClick={handleSubmit}
@@ -211,7 +381,17 @@ const Questions = () => {
           Adicionar Questão
         </button> */}
 
-      </form>
+      </Form>
+
+
+
+
+
+
+
+
+
+
 
       <div>
         <label htmlFor='answers'>
@@ -241,16 +421,6 @@ const Questions = () => {
           >
             Adicionar Resposta
         </button>        
-
-        {
-          answers.map((answer, index) => (
-            <div key={index}>
-              <p>{answer.answer}</p>
-              {answer.correct && <p>Resposta correta</p>}
-              <p onClick={() => removeAnswer(index)} >x</p>
-            </div>
-          ))
-        }
       </div>
       <div>
         <label htmlFor='themes'>
@@ -268,16 +438,8 @@ const Questions = () => {
           >
             Adicionar Tema
         </button>        
-        {
-          themes.map((theme, index) => (
-            <div key={index}>
-              <p>{theme}</p>
-              <p onClick={() => removeTheme(index)} >x</p>
-            </div>
-          ))
-        }
       </div>
-      <div>
+      {/* <div>
         <label htmlFor='tags'>
           Tags:
         <input
@@ -289,22 +451,13 @@ const Questions = () => {
         </label>
         <button
             type="button"
-            onClick={() => addTag()}
+            onClick={() => addTagToQuestion()}
           >
             Adicionar Tag
         </button>        
-
-        {
-          tags.map((tag, index) => (
-            <div key={index}>
-              <p>{tag}</p>
-              <p onClick={() => removeTag(index)} >x</p>
-            </div>
-          ))
-        }
-      </div>
+      </div> */}
     </Container>
   );
 }
 
-export default Questions;
+export default QuestionForm;

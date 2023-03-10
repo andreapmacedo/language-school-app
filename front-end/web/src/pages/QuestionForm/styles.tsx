@@ -2,13 +2,16 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   margin: 0px 100px;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  
 `;
 
-export const CardContainer = styled.div`
-  gap: 16px;
+export const Form = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-flow: row wrap;
-  margin-top: 80px;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #000;
 `;

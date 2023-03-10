@@ -1,13 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import Home from "../pages/Home";
-// import Cart from "../pages/Cart";
+import { FC } from 'react';
+import Home from "../pages/Home";
+import QuestionForm from "../pages/QuestionForm";
+import QuestionsManager from "../pages/QuestionsManager";
 
+interface Props {}
 
-const AppRoutes = () => (
+const AppRoutes: FC<Props> = () => (
   <BrowserRouter>
     <Routes>
-      {/* <Route exact path='/' element={<Home/>}/>
-      <Route path='/cart'  element={<Cart/>}/> */}
+    <Route path='/' element={<Home/>}/>
+      <Route path='/question-form'  element={<QuestionForm/>}/> 
+      <Route path='/questions-manager'  element={<QuestionsManager/>}/> 
     </Routes>
   </BrowserRouter>
 );

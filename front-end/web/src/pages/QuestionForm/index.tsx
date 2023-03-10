@@ -1,21 +1,14 @@
-import { useState, useEffect, useContext } from 'react';
-import { db } from '../../firebase/config';
-// import { addQuestion, addQuestionBy } from '../../firebase/firestore';
+import { useState, useEffect } from 'react';
 import { addQuestionBy } from '../../firebase/firestore';
-
-// import ProductCard from '../../components/ProductCard';
 // import Header from '../../components/Header';
 
 // import { GlobalContext } from '../../providers/GlobalProvider';
-import { Container, CardContainer } from './styles';
+import { Container, Form } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
 
 
-const Questions = () => {
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+const QuestionForm = () => {
   
   const initialQuery: IQuestionQuery = {
     category: '',
@@ -28,6 +21,7 @@ const Questions = () => {
     answers: [],
     themes: [],
     tags: [],
+    // createdAt: firebase.firestore.Timestamp;
   };
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
@@ -61,7 +55,7 @@ const Questions = () => {
     //   return false;
     // }
     if (queryAdd.question === '') {
-      alert('Please enter an category');
+      alert('Please enter an question');
       return false;
     }
     if (answers.length < 2) {
@@ -147,9 +141,7 @@ const Questions = () => {
     
     <Container>
     {/* //   <Header /> */}
-      {error && <p>Something went wrong ...</p>}
-      {loading && <p>Loading...</p>}
-      <form
+      <Form
         // onSubmit={handleSubmit}
       >
         <label htmlFor='category'>
@@ -198,6 +190,20 @@ const Questions = () => {
             onChange={handleQueryAddInput}
           />
         </label>
+       
+        <label>
+          Respostas:
+          {
+            answers.map((answer, index) => (
+              <div key={index}>
+                <p>{answer.answer}</p>
+                {answer.correct && <p>Resposta correta</p>}
+                <p onClick={() => removeAnswer(index)} >x</p>
+              </div>
+            ))
+          }
+        </label>
+
         <button
           type="button"
           onClick={handleSubmit}
@@ -211,7 +217,7 @@ const Questions = () => {
           Adicionar Questão
         </button> */}
 
-      </form>
+      </Form>
 
       <div>
         <label htmlFor='answers'>
@@ -241,16 +247,6 @@ const Questions = () => {
           >
             Adicionar Resposta
         </button>        
-
-        {
-          answers.map((answer, index) => (
-            <div key={index}>
-              <p>{answer.answer}</p>
-              {answer.correct && <p>Resposta correta</p>}
-              <p onClick={() => removeAnswer(index)} >x</p>
-            </div>
-          ))
-        }
       </div>
       <div>
         <label htmlFor='themes'>
@@ -307,4 +303,4 @@ const Questions = () => {
   );
 }
 
-export default Questions;
+export default QuestionForm;

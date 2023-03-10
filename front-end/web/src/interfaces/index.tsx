@@ -4,6 +4,7 @@ export interface IAnswer {
 }
 
 export interface IQuestionQuery {
+  id?: string;
   category: string;
   difficulty: string;
   type: string;

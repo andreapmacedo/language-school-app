@@ -44,6 +44,7 @@ export const Select = styled.select`
 `;
 
 export const BoxTags = styled.div`
+  display: flex;
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;
@@ -74,23 +75,26 @@ export const TagLeft = styled.div`
   align-items: center;
   background-color: #fff;
   border-right: 0;
-  border-color: #2f00ff;
+  border-color: #114677;
   border-style: solid;
   border-radius: 16px 0 0 16px;
   color: #2f00ff;
+  /* background-color: #ccf7f2; */
+  color: #114677;
   display: flex;
   padding: 0px 12px;
-
+  cursor: pointer;
 `;
 
 export const TagRight = styled.div`
 
   display: flex;
   /* background-color: red; */
-
+  padding-left: 8px;
   border-left: 0;
   /* border: 2px 2px 2px 0; */
   border-color: #2f00ff;
+  border-color: #114677;
   border-style: solid;
   border-radius: 0 16px 16px 0;
   /* width: 10%; */
@@ -103,17 +107,19 @@ export const TagRight = styled.div`
   text-align: center;
 
   p {
-    background-color: #e6bfbf;
+    background-color: #eee;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     font-size: 12px;
-    color: #2f00ff;
+    /* color: #2f00ff; */
+    color: #000;
     font-weight: bold;
+    cursor: pointer;
   }
 
 

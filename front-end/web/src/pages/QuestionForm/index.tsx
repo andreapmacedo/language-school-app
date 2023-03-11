@@ -52,11 +52,10 @@ const QuestionForm = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   
   
-  const [tag, setTag] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState('');
   // const [dbTags, setDbTags] = useState<string[]>([]);
+  const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [modalSearchTag, setModalSearchTag] = useState('');
 
   const [levels, setLevels] = useState(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
@@ -82,18 +81,26 @@ const QuestionForm = () => {
     setAnswer('');
   }
 
-  function addTagToQuestion(tagAdd): void {
-    setTags([...tags, tagAdd]);
-    setDbTags(dbTags.filter(({tag}) => tag !== tagAdd));
+  function addTagToQuestion(tagToAdd: string): void {
+    setQuestionTags([...questionTags, tagToAdd]);
+    setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
   }
 
-  function addTagToData(): void {
-    // setDbTags([...dbTags, tag]);
-    addTagToDB({tag});
+  function setAddTagToDB(): void {
+    if(tagInput === '') return;
+    if(dbTags.find(({tag}) => tag === tagInput)) {
+      alert('Tag already exists');
+      return;
+    }
+    if(questionTags.find((qt) => qt === tagInput)) {
+      alert('Tag already exists in question');
+      return;
+    }
+    addTagToDB({tag: tagInput});
     getTagsFromDB().then((tags) => {
       setDbTags(tags);
     });
-    setTag('');
+    setTagInput('');
   }
 
   function addTheme(): void {
@@ -170,14 +177,14 @@ const QuestionForm = () => {
   // }, [dbTags]);
 
   /**
-   * Alternativa ao useEffect acima porem com o listener da chamada da função addTagToData
+   * Alternativa ao useEffect acima porem com o listener da chamada da função setAddTagToDB
    */
 
   // useEffect(() => {
   //   getTagsFromDB().then((tags) => {
   //     setDbTags(tags);
   //   });
-  // }, [addTagToData]);
+  // }, [setAddTagToDB]);
 
   /**
    * temporareamente desabilitado
@@ -201,7 +208,7 @@ const QuestionForm = () => {
   const setDefault = () => {
     setQueryAdd(initialQuery);
     setAnswers([]);
-    setTags([]);
+    setQuestionTags([]);
     setThemes([]);
   }
 
@@ -219,12 +226,17 @@ const QuestionForm = () => {
     setAnswers(newAnswers);
   }
   
-  const removeTag = (index: number) => {
+  const removeTag = (index: number, tag: string) => {
+    console.log('removeTag', index, tag);
+    console.log('dbTags', dbTags);
+    
+    
     // alerta com confirmação
     // if (window.confirm('Are you sure you wish to delete this item?')) {
-      const newTags = [...tags];
+      const newTags = [...questionTags];
       newTags.splice(index, 1);
-      setTags(newTags);
+      setQuestionTags(newTags);
+      setDbTags([...dbTags, {tag}]);
     // }
   }
 
@@ -334,22 +346,26 @@ const QuestionForm = () => {
         </BoxTags>
         
         <BoxTags>
-          <Label htmlFor='tags'>
+          <Label htmlFor='questionTags'>
             Tags:
+            <TagContainer>
+
+            
           {
-            tags.map((tag, index) => (
-              <div key={index}>
-                <p>{tag}</p>
-                <p onClick={() => removeTag(index)} >x</p>
-              </div>
+            questionTags.map((tag, index) => (
+              <TagWrapper key={index}>
+                <TagLeft>{tag}</TagLeft>
+                <TagRight><p onClick={() => removeTag(index, tag)} >x</p></TagRight>
+              </TagWrapper>
             ))
           }
+          </TagContainer>
           </Label>
           {/* <Button
               type="button"
               onClick={() => addTagToQuestion()}
             >
-              Add tags
+              Add questionTags
           </Button>         */}
 
           <Button onClick={openModal}>Adicionar tag no modal</Button>
@@ -362,18 +378,18 @@ const QuestionForm = () => {
               overlayClassName="modal-overlay"
               className="modal-content"
             >
-              <h1>Adicionar tag</h1>
+              <h1>Tags</h1>
               <div>
-                <Label htmlFor='tags'>
+                <Label htmlFor='tagsInput'>
                   Tags:
                 <Input
                   type="text"
-                  name="tags"
-                  value={tag}
-                  onChange={(e) => setTag(e.target.value)}
+                  name="tagsInput"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
                   />
                 </Label>
-                {/* <Label htmlFor='search tags'>
+                {/* <Label htmlFor='search questionTags'>
                   Search Tags:
                 <Input
                   type="text"
@@ -385,9 +401,9 @@ const QuestionForm = () => {
                 </Label> */}
                 <Button
                     type="button"
-                    onClick={() => addTagToData()}
+                    onClick={() => setAddTagToDB()}
                   >
-                    Adicionar Tag
+                    Adicionar Tag ao DB
                 </Button>
                 <TagContainer>
                   {dbTags?.map(({tag}, index) => (
@@ -504,13 +520,13 @@ const QuestionForm = () => {
         </Button>        
       </div>
       {/* <div>
-        <Label htmlFor='tags'>
+        <Label htmlFor='questionTags'>
           Tags:
         <Input
           type="text"
-          name="tags"
+          name="questionTags"
           value={tag}
-          onChange={(e) => setTag(e.target.value)}
+          onChange={(e) => setTagInput(e.target.value)}
           />
         </Label>
         <button

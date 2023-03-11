@@ -82,15 +82,13 @@ const QuestionForm = () => {
     setAnswer('');
   }
 
-  function addTagToQuestion(): void {
-    setTags([...tags, tag]);
-    // addTagToDB({tag});
-    // setTag('');
+  function addTagToQuestion(tagAdd): void {
+    setTags([...tags, tagAdd]);
+    setDbTags(dbTags.filter(({tag}) => tag !== tagAdd));
   }
 
   function addTagToData(): void {
     // setDbTags([...dbTags, tag]);
-
     addTagToDB({tag});
     getTagsFromDB().then((tags) => {
       setDbTags(tags);
@@ -347,12 +345,12 @@ const QuestionForm = () => {
             ))
           }
           </Label>
-          <Button
+          {/* <Button
               type="button"
               onClick={() => addTagToQuestion()}
             >
               Add tags
-          </Button>        
+          </Button>         */}
 
           <Button onClick={openModal}>Adicionar tag no modal</Button>
           <div>
@@ -394,7 +392,9 @@ const QuestionForm = () => {
                 <TagContainer>
                   {dbTags?.map(({tag}, index) => (
                     <TagWrapper key={index}>
-                      <TagLeft>{tag}</TagLeft>
+                      <TagLeft
+                        onClick={() => addTagToQuestion(tag)}  
+                      >{tag}</TagLeft>
                       <TagRight
                         onClick={() => setRemoveTagFromDB(index)}
                       ><p>x</p></TagRight>

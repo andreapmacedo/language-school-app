@@ -1,19 +1,24 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 0px 100px;
-  border: 1px solid #000;
+  /* margin: 0px 100px; */
+  /* background-color: #191919; */
   display: flex;
   flex-direction: column;
+  width: 100%;
+  /* height: 100%; */
+  align-items: center;
   
 `;
 
 export const Form = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #fff;
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;
+  width: 90%;
 `;
 
 export const Input = styled.input`
@@ -48,6 +53,7 @@ export const BoxTags = styled.div`
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;
+  width: 95%;
 `;
 
 export const BoxSetup = styled.div`
@@ -60,6 +66,8 @@ export const BoxAdd = styled.div`
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;
+  width: 90%;
+  background-color: #fff;
 `;
 
 export const TagContainer = styled.div`
@@ -129,4 +137,29 @@ export const TagRight = styled.div`
   }
 
 
+
+`;
+
+export const BoxCards = styled.div`
+
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  flex-direction: column;
+  background-color: #eee;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px;
+  /* width: 90%; */
+`;
+
+export const ListCard = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px;
+  width: 90%;
 `;

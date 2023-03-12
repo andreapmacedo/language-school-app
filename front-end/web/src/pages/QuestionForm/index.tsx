@@ -21,6 +21,8 @@ import { Container,
     BoxAdd,
     TagLeft,
     TagRight,
+    ListCard,
+    BoxCards,
   } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
@@ -348,32 +350,32 @@ const QuestionForm = () => {
               ))
             }
           </Label>
-          <Button
+          {/* <Button
               type="button"
               onClick={() => addAnswer()}
             >
               Add Answers
-          </Button>      
+          </Button>       */}
         </BoxTags>
-        <BoxTags>
+        <BoxCards>
           <Label htmlFor='explanations'>
             Explanations:
+          </Label>
             {
               queryAdd.explanations.map((explanation, index) => (
-                <div key={index}>
-                  <p>{explanation}</p>
-                  <p onClick={() => removeExplanation(index)} >x</p>
-                </div>
+                <ListCard key={index}>
+                  <div>{explanation}</div>
+                  <div><p onClick={() => removeExplanation(index)} >x</p></div>
+                </ListCard>
               ))
             }
-          </Label>
-          <Button
+          {/* <Button
               type="button"
               onClick={() => addAnswer()}
             >
               Add Answers
-          </Button>      
-        </BoxTags>
+          </Button>       */}
+        </BoxCards>
         
         <BoxTags>
           <Label htmlFor='questionTags'>
@@ -521,6 +523,50 @@ const QuestionForm = () => {
           >
             Adicionar Resposta
         </Button>        
+      </BoxAdd>
+      <BoxAdd>
+      <h3>Tags</h3>
+        <div>
+          <Label htmlFor='tagsInput'>
+            Tag:
+          <Input
+            type="text"
+            name="tagsInput"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            />
+          </Label>
+          {/* <Label htmlFor='search questionTags'>
+            Search Tags:
+          <Input
+            type="text"
+            name="search_tag"
+            value={modalSearchTag}
+            // onChange={(e) => setModalSearchTag(e.target.value)}
+            // onChange={handleSearchTag}
+            />
+          </Label> */}
+          <Button
+              type="button"
+              onClick={() => setAddTagToDB()}
+            >
+              Adicionar Tag ao banco de dados
+          </Button>
+          <TagContainer>
+            {dbTags?.map(({tag}, index) => (
+              <TagWrapper key={index}>
+                <TagLeft
+                  onClick={() => addTagToQuestion(tag)}  
+                >{tag}</TagLeft>
+                <TagRight
+                  onClick={() => setRemoveTagFromDB(index)}
+                ><p>x</p></TagRight>
+                {/* <div>E</div> */}
+                {/* <p onClick={() => removeTag(index)} >x</p> */}
+              </TagWrapper>
+            ))}
+          </TagContainer>
+        </div>     
       </BoxAdd>
       
     </Container>

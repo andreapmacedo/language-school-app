@@ -18,6 +18,7 @@ import { Container,
     TagWrapper,
     BoxTags,
     BoxSetup,
+    BoxAdd,
     TagLeft,
     TagRight,
   } from './styles';
@@ -45,6 +46,7 @@ const QuestionForm = () => {
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
   const [answer, setAnswer] = useState('');
+  const [questionExplanation, setQuestionExplanation] = useState<string>('');
   const [theme, setTheme] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<IAnswer[]>([]);
@@ -252,6 +254,10 @@ const QuestionForm = () => {
     }
   }
 
+  const addQuestionExplanation = () => {
+    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, questionExplanation]});
+    setQuestionExplanation('');
+  }
 
 
   const removeTheme = (index: number) => {
@@ -266,6 +272,11 @@ const QuestionForm = () => {
     dbTags.filter((tag) => tag.includes(modalSearchTag));
   }
   
+  const removeExplanation = (index: number) => {
+    const newExplanation = [...queryAdd.explanations];
+    newExplanation.splice(index, 1);
+    setQueryAdd({...queryAdd, explanations: newExplanation});
+  }
 
 
   return (
@@ -333,6 +344,25 @@ const QuestionForm = () => {
                   <p>{answer.answer}</p>
                   {answer.correct && <p>Resposta correta</p>}
                   <p onClick={() => removeAnswer(index)} >x</p>
+                </div>
+              ))
+            }
+          </Label>
+          <Button
+              type="button"
+              onClick={() => addAnswer()}
+            >
+              Add Answers
+          </Button>      
+        </BoxTags>
+        <BoxTags>
+          <Label htmlFor='explanations'>
+            Explanations:
+            {
+              queryAdd.explanations.map((explanation, index) => (
+                <div key={index}>
+                  <p>{explanation}</p>
+                  <p onClick={() => removeExplanation(index)} >x</p>
                 </div>
               ))
             }
@@ -426,25 +456,6 @@ const QuestionForm = () => {
 
 
         </BoxTags>
-        <BoxTags>
-          <Label htmlFor='themes'>
-            Themes:
-            {
-            themes.map((theme, index) => (
-              <TagWrapper key={index}>
-                <p>{theme}</p>
-                <p onClick={() => removeTheme(index)} >x</p>
-              </TagWrapper>
-            ))
-          }
-          <Button
-            type="button"
-            onClick={() => addTheme()}
-          >
-            Add themes
-          </Button>    
-          </Label>
-        </BoxTags>
         
           {/* <GenericModal></GenericModal> */}
 
@@ -463,17 +474,25 @@ const QuestionForm = () => {
 
       </Form>
 
+      <BoxAdd>
+        <Label htmlFor='explanations'>
+          Explanation:
+        <Input
+          type="text"
+          name="explanation"
+          value={questionExplanation}
+          onChange={(e) => setQuestionExplanation(e.target.value)}
+          />
+        </Label>
+        <Button
+            type="button"
+            onClick={() => addQuestionExplanation()}
+          >
+            Adicionar Explicação
+        </Button>   
+      </BoxAdd>
 
-
-
-
-
-
-
-
-
-
-      <div>
+      <BoxAdd>
         <Label htmlFor='answers'>
           Answers:
         <Input
@@ -483,6 +502,7 @@ const QuestionForm = () => {
           onChange={(e) => setAnswer(e.target.value)}
           />
         </Label>
+        
         <div>
           <Label htmlFor="isCorrect" >
             Resposta correta
@@ -501,41 +521,8 @@ const QuestionForm = () => {
           >
             Adicionar Resposta
         </Button>        
-      </div>
-      <div>
-        <Label htmlFor='themes'>
-          Themes:
-        <Input
-          type="text"
-          name="themes"
-          value={theme}
-          onChange={(e) => setTheme(e.target.value)}
-          />
-        </Label>
-        <Button
-            type="button"
-            onClick={() => addTheme()}
-          >
-            Adicionar Tema
-        </Button>        
-      </div>
-      {/* <div>
-        <Label htmlFor='questionTags'>
-          Tags:
-        <Input
-          type="text"
-          name="questionTags"
-          value={tag}
-          onChange={(e) => setTagInput(e.target.value)}
-          />
-        </Label>
-        <button
-            type="button"
-            onClick={() => addTagToQuestion()}
-          >
-            Adicionar Tag
-        </button>        
-      </div> */}
+      </BoxAdd>
+      
     </Container>
   );
 }

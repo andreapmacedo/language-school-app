@@ -48,9 +48,15 @@ export const BoxTags = styled.div`
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;
-  
 `;
+
 export const BoxSetup = styled.div`
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #000;
+`;
+
+export const BoxAdd = styled.div`
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;

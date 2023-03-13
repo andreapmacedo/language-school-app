@@ -37,7 +37,7 @@ export const Button = styled.button`
 `;
 
 export const Label = styled.label`
-  margin: 4px;
+  margin: 8px 16px;
   /* padding: 10px; */
   /* border: 1px solid #000; */
 `;
@@ -60,6 +60,8 @@ export const BoxSetup = styled.div`
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export const BoxAdd = styled.div`
@@ -155,11 +157,52 @@ export const BoxCards = styled.div`
 
 export const ListCard = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: center;
   background-color: #fff;
   border-radius: 8px;
   padding: 8px;
   margin: 8px;
   width: 90%;
+
+  /* div:first-child {
+    background-color: red;
+  } */
+
+  p {
+
+    width: 90%;
+  }
+
+  div {
+    padding-left: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+
+  div:nth-child(1) {
+    /* background-color: red; */
+    font-size: 16px;
+    /* margin-left: 8px; */
+    padding-left: 16px;
+    cursor: pointer;
+    /* font-weight: bold; */
+  }
+
+  div:nth-child(2) {
+    /* background-color: blue; */
+    /* width: 10%; */
+    /* margin-left: 8px; */
+    padding-left: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
 `;

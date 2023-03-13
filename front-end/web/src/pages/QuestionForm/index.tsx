@@ -3,7 +3,7 @@ import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
 import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
 import Select from '../../components/Bricks/Select';
-import GenericButton from '../../components/Bricks/GenericButton';
+import GenericButton from '../../components/Bricks/Buttons/GenericButton';
 import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
@@ -11,6 +11,7 @@ import { HiTrash } from 'react-icons/hi';
 import { CiEdit } from 'react-icons/ci';
 import { IoMdAddCircle } from 'react-icons/io';
 import { IoCloseCircle } from 'react-icons/io5';
+import CardExplanation from '../../components/QuestionForm/CardExplanation';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
@@ -316,6 +317,14 @@ const QuestionForm = () => {
 
           </Label>
         </BoxSetup>
+        <CardExplanation
+         onClick={removeExplanation} list={queryAdd.explanations} 
+         onClickAdd={addQuestionExplanation} onChangeAdd={setQuestionExplanation}
+         valueAdd={questionExplanation} 
+        />
+          
+        
+
         <BoxTags>
           <Label htmlFor='answers'>
             Answers:
@@ -344,7 +353,6 @@ const QuestionForm = () => {
               queryAdd.explanations.map((explanation, index) => (
                 <ListCard key={index}>
                   <p>{explanation}</p>
-
                   <div
                     onClick={() => removeExplanation(index)}
                   >

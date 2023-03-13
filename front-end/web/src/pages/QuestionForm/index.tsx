@@ -2,7 +2,15 @@ import { useState, useEffect } from 'react';
 import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
 import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
+import Select from '../../components/Bricks/Select';
+import GenericButton from '../../components/Bricks/GenericButton';
+import AddButton from '../../components/Bricks/Buttons/AddButton';
+import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
+import { HiTrash } from 'react-icons/hi';
+import { CiEdit } from 'react-icons/ci';
+import { IoMdAddCircle } from 'react-icons/io';
+import { IoCloseCircle } from 'react-icons/io5';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
@@ -13,7 +21,7 @@ import { Container,
     Input,
     Button,
     Label,
-    Select,
+    // Select,
     TagContainer,
     TagWrapper,
     BoxTags,
@@ -58,14 +66,18 @@ const QuestionForm = () => {
   
   
   const [tagInput, setTagInput] = useState('');
+  const [addTagOpen, setAddTagOpen] = useState(false);
+
   // const [dbTags, setDbTags] = useState<string[]>([]);
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
   const [modalSearchTag, setModalSearchTag] = useState('');
   const [dbTagChange, setDbTagChange] = useState(false);
 
-  const [levels, setLevels] = useState(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
-
+  const [questionLevel, setQuestionLevel] = useState(['1', '2', '3', '4', '5']);
+  const [questionType, setQuestionType] = useState(['Multiple', 'Boolean']);
+  const [questionDifficulty, setQuestionDifficulty] = useState(['Easy', 'Medium', 'Hard']);
+  const [questionCategory, setQuestionCategory] = useState(['Quiz', 'Test', 'Exam', 'Homework', 'Assignment', 'Project', 'Other']);
 
   const [dbThemes, setDbThemes] = useState<string[]>([]);
 
@@ -166,27 +178,11 @@ const QuestionForm = () => {
   /**
    * Get tags from DB when component is mounted
    */
-
-
   useEffect(() => {
-    // setDbTags(['teste', 'teste2']);
     getTagsFromDB().then((tags) => {
       setDbTags(tags);
     });
-  }, []);
-
-  /**
-   * Depois de inserir um novo tag, atualiza a lista de tags
-   */
-  // useEffect(() => {
-  //   getTagsFromDB().then((tags) => {
-  //     setDbTags(tags);
-  //   });
-  // }, [dbTags]);
-
-  /**
-   * Alternativa ao useEffect acima porem com o listener da chamada da função setAddTagToDB
-   */
+  }, []); 
 
   useEffect(() => {
     getTagsFromDB().then((tags) => {
@@ -196,22 +192,18 @@ const QuestionForm = () => {
     });
   }, [dbTagChange]);
 
-  /**
-   * temporareamente desabilitado
-   */
-   
-  // useEffect(() => {
-  //   setDbThemes(['teste', 'teste2']);
-  //   // getThemesFromDB().then((themes) => {
-  //   //   setDbThemes(themes);
-  //   // });
-  // }, []);
 
   const handleQueryAddInput = ({target} : any) => {
     const { value, name } = target;
     // if (name === 'title') {
     //   setTask({...task, title: value });
     // }
+    setQueryAdd({...queryAdd, [name]: value });
+  };
+
+  const handleSelectInput = (selectedItem: any) => {
+    // console.log('handleSelectInput', selectedItem);
+    const { value, name } = selectedItem;
     setQueryAdd({...queryAdd, [name]: value });
   };
 
@@ -223,7 +215,7 @@ const QuestionForm = () => {
   }
 
   const handleSubmit = () => {
-    console.log('handleSubmit');
+    // console.log('handleSubmit');
     if (validateInputs()) {
       addQuestion(queryAdd);
       setDefault();
@@ -237,8 +229,8 @@ const QuestionForm = () => {
   }
   
   const removeTag = (index: number, tag: string) => {
-    console.log('removeTag', index, tag);
-    console.log('dbTags', dbTags);
+    // console.log('removeTag', index, tag);
+    // console.log('dbTags', dbTags);
     
     
     // alerta com confirmação
@@ -308,39 +300,20 @@ const QuestionForm = () => {
         <BoxSetup>
           <Label htmlFor='category'>
             Category:
-            <Input 
-              type="text"
-              name="category"
-              value={queryAdd.category}
-              onChange={handleQueryAddInput}
-            />
+            <Select name="category" options={questionCategory} onChange={handleSelectInput}/>
           </Label>
           <Label htmlFor='difficulty'>
             Difficulty:
-            <Input
-              type="text"
-              name="difficulty"
-              value={queryAdd.difficulty}
-              onChange={handleQueryAddInput}
-            />
+            <Select name="difficulty" options={questionDifficulty} onChange={handleSelectInput}/>
           </Label>
           <Label htmlFor='type'>
             Type:
-            <Input
-              type="text"
-              name="type"
-              value={queryAdd.type}
-              onChange={handleQueryAddInput}
-            />
+            <Select name="type" options={questionType} onChange={handleSelectInput}/>
           </Label>
           <Label htmlFor='level'>
             Level:
-            <Select
-              // type="text"
-              name="level"
-              value={queryAdd.level}
-              onChange={handleQueryAddInput}
-            />
+            <Select name="level" options={questionLevel} onChange={handleSelectInput}/>
+
           </Label>
         </BoxSetup>
         <BoxTags>
@@ -370,17 +343,39 @@ const QuestionForm = () => {
             {
               queryAdd.explanations.map((explanation, index) => (
                 <ListCard key={index}>
-                  <div>{explanation}</div>
-                  <div><p onClick={() => removeExplanation(index)} >x</p></div>
+                  <p>{explanation}</p>
+
+                  <div
+                    onClick={() => removeExplanation(index)}
+                  >
+                  <CiEdit 
+                    // size={20}
+                    style={{
+                      color:  "#5ac9d1",
+                      // backgroundColor : '#000000',
+                      // padding:  '30px'
+                    }}
+                  
+                  />                    
+                  </div>
+
+
+                  <div
+                    onClick={() => removeExplanation(index)}
+                  >
+                  <HiTrash 
+                    // size={20}
+                    style={{
+                      color:  "#d15a5a",
+                      // backgroundColor : '#000000',
+                      // padding:  '30px'
+                    }}
+                  
+                  />                    
+                  </div>
                 </ListCard>
               ))
             }
-          {/* <Button
-              type="button"
-              onClick={() => addAnswer()}
-            >
-              Add Answers
-          </Button>       */}
         </BoxCards>
         
         <BoxTags>
@@ -406,7 +401,7 @@ const QuestionForm = () => {
               Add questionTags
           </Button>         */}
 
-          <Button onClick={openModal}>Adicionar tag no modal</Button>
+          <Button onClick={openModal}>add tags</Button>
           <div>
             <Modal
               isOpen={modalIsOpen}
@@ -416,33 +411,11 @@ const QuestionForm = () => {
               overlayClassName="modal-overlay"
               className="modal-content"
             >
-              <h1>Tags</h1>
+              <CloseButton onClick={closeModal}/>
+              <h3>Click on tags to add them</h3>
               <div>
-                <Label htmlFor='tagsInput'>
-                  Tags:
-                <Input
-                  type="text"
-                  name="tagsInput"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  />
-                </Label>
-                {/* <Label htmlFor='search questionTags'>
-                  Search Tags:
-                <Input
-                  type="text"
-                  name="search_tag"
-                  value={modalSearchTag}
-                  // onChange={(e) => setModalSearchTag(e.target.value)}
-                  // onChange={handleSearchTag}
-                  />
-                </Label> */}
-                <Button
-                    type="button"
-                    onClick={() => setAddTagToDB()}
-                  >
-                    Adicionar Tag ao DB
-                </Button>
+                
+                
                 <TagContainer>
                   {dbTags?.map(({tag}, index) => (
                     <TagWrapper key={index}>
@@ -451,14 +424,45 @@ const QuestionForm = () => {
                       >{tag}</TagLeft>
                       <TagRight
                         onClick={() => setRemoveTagFromDB(index)}
-                      ><p>x</p></TagRight>
-                      {/* <div>E</div> */}
-                      {/* <p onClick={() => removeTag(index)} >x</p> */}
+                      >
+                        {/* <p>x</p> */}
+                        <HiTrash 
+                          // size={20}
+                          style={{
+                            color:  "#d15a5a",
+                          }}
+                        
+                        />
+                      </TagRight>
                     </TagWrapper>
                   ))}
                 </TagContainer>
+                <div>
+                  <AddButton onClick={() => setAddTagOpen(!addTagOpen)}
+                    text={addTagOpen ? "Cancel" : "Add Tag"}
+                   />
+                  {addTagOpen &&
+                    <div>
+                      <Label htmlFor='tagsInput'>
+                        Tag:
+                      <Input
+                        type="text"
+                        name="tagsInput"
+                        value={tagInput}
+                        onChange={(e) => setTagInput(e.target.value)}
+                      />
+                      </Label>
+                      <AddButton 
+                        onClick={setAddTagToDB}
+                        text="Add"
+                        disabled={tagInput.length === 0}
+                      />
+                    </div>
+                  }
+                  
+                </div>
+
               </div>              
-              <Button className="modal-close" onClick={closeModal}>close</Button>
             </Modal>
           </div>
 
@@ -560,7 +564,18 @@ const QuestionForm = () => {
                 >{tag}</TagLeft>
                 <TagRight
                   onClick={() => setRemoveTagFromDB(index)}
-                ><p>x</p></TagRight>
+                >
+                  {/* <p>x</p> */}
+                  <HiTrash 
+                    // size={20}
+                    style={{
+                      color:  "#d15a5a",
+                      // backgroundColor : '#000000',
+                      // padding:  '30px'
+                    }}
+                  
+                  />
+                </TagRight>
                 {/* <div>E</div> */}
                 {/* <p onClick={() => removeTag(index)} >x</p> */}
               </TagWrapper>

@@ -26,6 +26,7 @@ import { Container,
   } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
+import { db } from '../../firebase/config';
 
 Modal.setAppElement('#root');
 
@@ -61,6 +62,7 @@ const QuestionForm = () => {
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
   const [modalSearchTag, setModalSearchTag] = useState('');
+  const [dbTagChange, setDbTagChange] = useState(false);
 
   const [levels, setLevels] = useState(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
 
@@ -100,10 +102,12 @@ const QuestionForm = () => {
       alert('Tag already exists in question');
       return;
     }
-    addTagToDB({tag: tagInput});
-    getTagsFromDB().then((tags) => {
-      setDbTags(tags);
-    });
+    addTagToDB({tag: tagInput});    
+    setDbTagChange(!dbTagChange);
+    
+    // getTagsFromDB().then((tags) => {
+    //   setDbTags(tags);
+    // });
     setTagInput('');
   }
 
@@ -184,11 +188,13 @@ const QuestionForm = () => {
    * Alternativa ao useEffect acima porem com o listener da chamada da função setAddTagToDB
    */
 
-  // useEffect(() => {
-  //   getTagsFromDB().then((tags) => {
-  //     setDbTags(tags);
-  //   });
-  // }, [setAddTagToDB]);
+  useEffect(() => {
+    getTagsFromDB().then((tags) => {
+      // Remover os tags que foram adicionados a questão
+      const dbTags = tags.filter(({tag}) => !questionTags.includes(tag));
+      setDbTags(dbTags);
+    });
+  }, [dbTagChange]);
 
   /**
    * temporareamente desabilitado
@@ -467,12 +473,6 @@ const QuestionForm = () => {
         >
           Adicionar Questão
         </Button>        
-
-        {/* <button
-         type="submit"
-        >
-          Adicionar Questão
-        </button> */}
 
       </Form>
 

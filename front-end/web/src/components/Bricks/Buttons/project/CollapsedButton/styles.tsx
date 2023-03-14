@@ -7,13 +7,8 @@ export const Container = styled.div`
   justify-content: center;
   padding: 8px 0;
   width: 150px;
-
   border-radius: 4px;
-
   font-style: italic;
-
-  
-
   &:hover {
     cursor: pointer;
     /* background-color: #0069d9; */

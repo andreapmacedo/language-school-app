@@ -1,17 +1,32 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  
-  /* background-color: #fff; */
-  /* background-color: #114677; */
-  /* top: 0; */
-  /* position: relative; */
+  gap: 8px;
   display: flex;
-  padding: 8px 16px;
-  align-self: flex-end;
+  align-items: center;
+  align-content: center;
+  background-color: transparent;
+  
   border: none;
+  
+  padding: 0px 16px;
+  color: green;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
   cursor: pointer;
-  /* margin: 8px 0px; */
+  margin: 8px 0px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+
+  &[disabled] {
+    color: #999;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
 
   /* .icon{
     width: 16px;
@@ -19,5 +34,6 @@ export const Container = styled.div`
     fill: #3a77ff;
     margin-right: 8px;
   } */
+
 
 `;

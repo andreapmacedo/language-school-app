@@ -3,14 +3,14 @@ import styled, { ThemedStyledProps } from 'styled-components';
 interface Props {
   textColor: string;
 }
-// const ButtonProp = styled.button<Props>`
-//   color: ${(props: ThemedStyledProps<Props, any>) => props.textColor};
-//   /* ...resto do estilo */
-// `;
 
 export const Container = styled.div`
 `;
 
+const ButtonProp = styled.button<Props>`
+  color: ${(props: ThemedStyledProps<Props, any>) => props.textColor};
+  /* ...resto do estilo */
+`;
 
 export const Button = styled.button`
   gap: 8px;
@@ -18,9 +18,8 @@ export const Button = styled.button`
   border: none;
   padding: 0px 16px;
   /* color: #3a77ff; */
-  background-color: transparent;
-  /* color: ${(props: ThemedStyledProps<Props, any>) => props.textColor}; */
-  color: ${props => props.textColor};// utiliza a nova propriedade
+  color: ${(props: ThemedStyledProps<Props, any>) => props.textColor};
+  /* color: ${props => props.textColor}; utiliza a nova propriedade */
   font-size: 16px;
   
   /* font-weight: 500; */

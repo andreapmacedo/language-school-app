@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
-import { Container, CardContent, CollapsedContent } from './styles';
-import GenericLabel from '../../Bricks/GenericLabel';
-import AddExplanation from '../AddExplanation';
+import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
+import CollapsedTextarea from '../CollapsedTextarea';
 import TrashButton from '../../Bricks/Buttons/TrashButton';
 import EditButton from '../../Bricks/Buttons/EditButton';
-import CollapsedButton from '../../Bricks/Buttons/ProjectButtonCollapsed';
 import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
+import CancelButton from '../../Bricks/Buttons/CancelButton';
+import AddButton from '../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../Bricks/Buttons/GenericButton';
+import { GiCheckMark } from 'react-icons/gi';
+
 
 interface Props {
   onClick: (index: number) => void;
@@ -19,45 +21,47 @@ interface Props {
 const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setQuestionExplanation, questionExplanation }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const cancelClickHandler = () => {
+  const cancelOnClickHandler = () => {
     setIsCollapsed(!isCollapsed)
     setQuestionExplanation(''); 
   }
 
-  const addClickHandler = () => {
+  const addOnClickHandler = () => {
     addQuestionExplanation();
     setIsCollapsed(!isCollapsed);
   }
 
-
   return (
     <Container>
-      {isCollapsed &&
-        <GenericButton 
+      {!isCollapsed &&
+        <AddButton 
           onClick={() => setIsCollapsed(!isCollapsed)}
           text='Add Explanation'
+          color='#eee'
         />
       }
-      <CollapsedContent>
-        {!isCollapsed &&
-          <div>
-            <AddExplanation
+        {isCollapsed &&
+          <CollapsedContent>
+          
+            <CollapsedTextarea
               setQuestionExplanation={setQuestionExplanation}     
               questionExplanation={questionExplanation}
             />
-            <div>
-              <GenericButton 
-                onClick={cancelClickHandler}
-                text='Cancel'
+            <ControllerPanel>
+              <GenericButton
+                disabled={questionExplanation.length === 0} 
+                onClick={addOnClickHandler}
+                text='add'
+                icon={GiCheckMark}
               />
-              <GenericButton 
-                onClick={addClickHandler}
-                text='Add'
+              <CancelButton
+                onClick={cancelOnClickHandler}
+                text='cancel'
               />
-            </div>
-          </div>
+            </ControllerPanel>
+          
+          </CollapsedContent>
         }
-      </CollapsedContent>
       {
         list.map((explanation, index) => (
           <CardContent key={index} >

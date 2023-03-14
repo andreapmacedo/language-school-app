@@ -3,7 +3,7 @@ import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
 import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
 import Select from '../../components/Bricks/Select';
-import GenericButton from '../../components/Bricks/Buttons/GenericButton';
+import GenericButton from '../../components/Bricks/Buttons/gens/firstGen/GenericButton';
 import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
@@ -22,7 +22,6 @@ import { Container,
     Input,
     Button,
     Label,
-    // Select,
     TagContainer,
     TagWrapper,
     BoxTags,

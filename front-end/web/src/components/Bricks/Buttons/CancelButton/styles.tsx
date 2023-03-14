@@ -10,7 +10,7 @@ export const Container = styled.div`
   border: none;
   
   padding: 0px 16px;
-  color: #3a77ff;
+  color: red;
   font-size: 16px;
   font-weight: 500;
   font-style: italic;
@@ -27,13 +27,12 @@ export const Container = styled.div`
     cursor: not-allowed;
     text-decoration: none;
   }
-
-
-  .icon{
+  
+  /* .icon{
     width: 16px;
     height: 16px;
     fill: #3a77ff;
     margin-right: 8px;
-  }
+  } */
 
 `;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from './styles';
-import { GiConfirmed } from 'react-icons/gi';
+import { GiCancel } from 'react-icons/gi';
 
 interface Props {
   onClick: () => void;
@@ -10,7 +10,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const ConfirmButton: React.FC<Props> = ({
+const CancelButton: React.FC<Props> = ({
   onClick,
   text,
   color,
@@ -23,7 +23,7 @@ const ConfirmButton: React.FC<Props> = ({
         onClick={onClick}
         disabled={disabled || false}
       >
-        <GiConfirmed
+        <GiCancel
           className='icon' 
           size={size || 18}
           // color={color || 'green'}
@@ -34,5 +34,4 @@ const ConfirmButton: React.FC<Props> = ({
   );
 };
 
-export default ConfirmButton;
-
+export default CancelButton;

@@ -9,7 +9,7 @@ interface Props {
   color?: string;
   size?: number;
   disabled?: boolean;
-  textColor?: string; 
+  textColor?: string; // define a cor do texto
 }
 
 const GenericButton: React.FC<Props> = ({

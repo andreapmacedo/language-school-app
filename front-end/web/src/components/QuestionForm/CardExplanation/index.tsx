@@ -1,63 +1,53 @@
-import React from 'react';
-import { Container } from './styles';
-import { HiTrash } from 'react-icons/hi';
-import { CiEdit } from 'react-icons/ci';
+import React, {useState} from 'react';
+import { Container, CardContent } from './styles';
 import GenericLabel from '../../Bricks/GenericLabel';
 import AddExplanation from '../AddExplanation';
+import TrashButton from '../../Bricks/Buttons/TrashButton';
+import EditButton from '../../Bricks/Buttons/EditButton';
+import GenericCard from '../../Bricks/Cards/GenericCard';
 
 interface Props {
   onClick: (index: number) => void;
-  list: string[];
   onClickAdd: () => void;
   onChangeAdd: (e: string) => void;
+  list: string[];
   valueAdd: string;
 }
 
 const CardExplanation: React.FC<Props> = ({onClick, list, onClickAdd, onChangeAdd, valueAdd }) => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  
   return (
-    <Container >
+    <Container>
       <GenericLabel text="Explicações" />
+      <div>
+        <button onClick={() => setIsCollapsed(!isCollapsed)}>
+          {isCollapsed ? 'Cancel' : 'Add Explanation'}
+        </button>
+        <div>
+          {isCollapsed &&
+            <AddExplanation
+              onChangeAdd={onChangeAdd} onClickAdd={onClickAdd} valueAdd={valueAdd}
+              isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed}
+            />
+          }
+        </div>
+      </div>
       {
         list.map((explanation, index) => (
-          <div key={index}>
+          <CardContent key={index} >
             <p>{explanation}</p>
-
-            <div
-              onClick={() => onClick(index)}
-            >
-            <CiEdit 
-              // size={20}
-              style={{
-                color:  "#5ac9d1",
-                // backgroundColor : '#000000',
-                // padding:  '30px'
-              }}
-            
-            />                    
+            <div>
+              <TrashButton 
+                onClick={() => onClick(index)}
+              />
+              <EditButton 
+                onClick={() => onClick(index)}
+              />
             </div>
-
-
-            <div
-              onClick={() => onClick(index)}
-            >
-            <HiTrash 
-              // size={20}
-              style={{
-                color:  "#d15a5a",
-                // backgroundColor : '#000000',
-                // padding:  '30px'
-              }}
-            
-            />                    
-            </div>
-          </div>
+          </CardContent>
         ))
       }
-
-      <AddExplanation
-        onChangeAdd={onChangeAdd} onClickAdd={onClickAdd} valueAdd={valueAdd}
-      
-      />
     </Container>
   );
 };

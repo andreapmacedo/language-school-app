@@ -256,6 +256,7 @@ const QuestionForm = () => {
   }
 
   const addQuestionExplanation = () => {
+    if(questionExplanation === '') return;
     setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, questionExplanation]});
     setQuestionExplanation('');
   }
@@ -314,17 +315,15 @@ const QuestionForm = () => {
           <Label htmlFor='level'>
             Level:
             <Select name="level" options={questionLevel} onChange={handleSelectInput}/>
-
           </Label>
         </BoxSetup>
+
         <CardExplanation
-         onClick={removeExplanation} list={queryAdd.explanations} 
-         onClickAdd={addQuestionExplanation} onChangeAdd={setQuestionExplanation}
-         valueAdd={questionExplanation} 
+          onClick={removeExplanation} list={queryAdd.explanations} 
+          onClickAdd={addQuestionExplanation} onChangeAdd={setQuestionExplanation}
+          valueAdd={questionExplanation} 
         />
           
-        
-
         <BoxTags>
           <Label htmlFor='answers'>
             Answers:
@@ -488,7 +487,7 @@ const QuestionForm = () => {
 
       </Form>
 
-      <BoxAdd>
+      {/* <BoxAdd>
         <Label htmlFor='explanations'>
           Explanation:
         <Input
@@ -504,7 +503,7 @@ const QuestionForm = () => {
           >
             Adicionar Explicação
         </Button>   
-      </BoxAdd>
+      </BoxAdd> */}
 
       <BoxAdd>
         <Label htmlFor='answers'>
@@ -548,16 +547,7 @@ const QuestionForm = () => {
             onChange={(e) => setTagInput(e.target.value)}
             />
           </Label>
-          {/* <Label htmlFor='search questionTags'>
-            Search Tags:
-          <Input
-            type="text"
-            name="search_tag"
-            value={modalSearchTag}
-            // onChange={(e) => setModalSearchTag(e.target.value)}
-            // onChange={handleSearchTag}
-            />
-          </Label> */}
+
           <Button
               type="button"
               onClick={() => setAddTagToDB()}

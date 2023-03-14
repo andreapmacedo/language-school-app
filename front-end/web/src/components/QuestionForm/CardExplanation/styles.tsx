@@ -4,9 +4,30 @@ export const Container = styled.div`
   /* margin: 0px 100px; */
   /* background-color: #191919; */
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   width: 100%;
   /* height: 100%; */
   align-items: center;
+
+`;
+export const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* background-color: #fff; */
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  width: 90%;
+
+  div {
+    display: flex;
+    flex-direction: row;
+
+    /* background-color: red; */
+    justify-content: flex-end;
+    align-items: center;
+    /* margin-bottom: 10px; */
+  }
 
 `;

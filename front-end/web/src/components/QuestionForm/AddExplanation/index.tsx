@@ -5,11 +5,25 @@ import { Container } from './styles';
 interface Props {
   onClickAdd: () => void;
   onChangeAdd: (e: string) => void;
+  setIsCollapsed: (e: boolean) => void;
+  isCollapsed: boolean;
   text?: string;
   valueAdd: string;
 }
 
-const AddExplanation: React.FC<Props> = ({ onChangeAdd, onClickAdd, valueAdd  }) => {
+const AddExplanation: React.FC<Props> = ({ 
+  onChangeAdd,
+  isCollapsed,
+  setIsCollapsed,
+  onClickAdd,
+  valueAdd  }) => {
+
+  const clickHandler = () => {
+    console.log('clickHandler');
+    onClickAdd();
+    setIsCollapsed(!isCollapsed);
+  }
+
   return (
     <Container>
         <label htmlFor='explanations'>
@@ -25,7 +39,9 @@ const AddExplanation: React.FC<Props> = ({ onChangeAdd, onClickAdd, valueAdd  })
         <button
             type="button"
             // onClick={() => addQuestionExplanation()}
-            onClick={() => onClickAdd()}
+            onClick={clickHandler}
+            // onClick={() => setIsCollapsed(!isCollapsed)}
+            disabled={!valueAdd}
           >
             Adicionar Explicação
         </button>         

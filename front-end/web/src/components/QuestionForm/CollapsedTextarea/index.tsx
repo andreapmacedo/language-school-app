@@ -1,7 +1,5 @@
 import React from 'react';
 import { Container } from './styles';
-import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
-import GenericInput from '../../Bricks/GenericInput';
 import GenericLabel from '../../Bricks/GenericLabel';
 import GenericTextarea from '../../Bricks/GenericTextarea';
 
@@ -18,7 +16,7 @@ const CollapsedTextarea: React.FC<Props> = ({
 
   return (
     <Container>
-      <GenericLabel text='explanation:' />
+      <GenericLabel text='Explanation:' />
       <GenericTextarea
         name="explanation"
         value={questionExplanation}

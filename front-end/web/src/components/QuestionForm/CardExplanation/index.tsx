@@ -42,7 +42,6 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation
       }
         {isCollapsed &&
           <CollapsedContent>
-          
             <CollapsedTextarea
               setQuestionExplanation={setQuestionExplanation}     
               questionExplanation={questionExplanation}

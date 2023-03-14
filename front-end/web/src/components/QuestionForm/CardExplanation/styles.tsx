@@ -1,33 +1,58 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  /* margin: 0px 100px; */
-  /* background-color: #191919; */
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* height: 100%; */
-  align-items: center;
+  border: 1px solid #000;
+  border-radius: 4px;
+  /* align-items: center; */
 
+  label {
+    margin: 8px 16px;
+  }
 `;
+
 export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
-  /* background-color: #fff; */
   margin: 10px;
   padding: 10px;
   border: 1px solid #000;
   border-radius: 5px;
-  width: 90%;
+  align-self: center;
+  width: 96%;
 
   div {
     display: flex;
     flex-direction: row;
-
-    /* background-color: red; */
     justify-content: flex-end;
     align-items: center;
-    /* margin-bottom: 10px; */
+    gap: 8px;
+  }
+`;
+
+export const CollapsedContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  /* border: 1px solid #000; */
+  border-radius: 5px;
+  align-self: center;
+  width: 96%;
+
+  button {
+    /* margin: 8px 0; */
+    border: none;
+    background: none;
+    color: #000;
+    font-size: 16px;
+    /* font-weight: bold; */
+    cursor: pointer;
+    width: 140px;
   }
 
+
 `;
+

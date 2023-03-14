@@ -344,7 +344,7 @@ const QuestionForm = () => {
               Add Answers
           </Button>       */}
         </BoxTags>
-        <BoxCards>
+        {/* <BoxCards>
           <Label htmlFor='explanations'>
             Explanations:
           </Label>
@@ -383,7 +383,7 @@ const QuestionForm = () => {
                 </ListCard>
               ))
             }
-        </BoxCards>
+        </BoxCards> */}
         
         <BoxTags>
           <Label htmlFor='questionTags'>

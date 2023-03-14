@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import { Container, CardContent } from './styles';
+import { Container, CardContent, CollapsedContent } from './styles';
 import GenericLabel from '../../Bricks/GenericLabel';
 import AddExplanation from '../AddExplanation';
 import TrashButton from '../../Bricks/Buttons/TrashButton';
 import EditButton from '../../Bricks/Buttons/EditButton';
-import GenericCard from '../../Bricks/Cards/GenericCard';
 
 interface Props {
   onClick: (index: number) => void;
@@ -20,7 +19,7 @@ const CardExplanation: React.FC<Props> = ({onClick, list, onClickAdd, onChangeAd
   return (
     <Container>
       <GenericLabel text="Explicações" />
-      <div>
+      <CollapsedContent>
         <button onClick={() => setIsCollapsed(!isCollapsed)}>
           {isCollapsed ? 'Cancel' : 'Add Explanation'}
         </button>
@@ -32,16 +31,16 @@ const CardExplanation: React.FC<Props> = ({onClick, list, onClickAdd, onChangeAd
             />
           }
         </div>
-      </div>
+      </CollapsedContent>
       {
         list.map((explanation, index) => (
           <CardContent key={index} >
             <p>{explanation}</p>
             <div>
-              <TrashButton 
+              <EditButton 
                 onClick={() => onClick(index)}
               />
-              <EditButton 
+              <TrashButton 
                 onClick={() => onClick(index)}
               />
             </div>

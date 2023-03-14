@@ -4,6 +4,9 @@ import GenericLabel from '../../Bricks/GenericLabel';
 import AddExplanation from '../AddExplanation';
 import TrashButton from '../../Bricks/Buttons/TrashButton';
 import EditButton from '../../Bricks/Buttons/EditButton';
+import CollapsedButton from '../../Bricks/Buttons/ProjectButtonCollapsed';
+import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
+import GenericButton from '../../Bricks/Buttons/GenericButton';
 
 interface Props {
   onClick: (index: number) => void;
@@ -14,32 +17,46 @@ interface Props {
 }
 
 const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setQuestionExplanation, questionExplanation }) => {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const cancelClickHandler = () => {
     setIsCollapsed(!isCollapsed)
     setQuestionExplanation(''); 
   }
 
-  
+  const addClickHandler = () => {
+    addQuestionExplanation();
+    setIsCollapsed(!isCollapsed);
+  }
+
+
   return (
     <Container>
-      <GenericLabel text="Explicações" />
+      {isCollapsed &&
+        <GenericButton 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          text='Add Explanation'
+        />
+      }
       <CollapsedContent>
-        <button onClick={cancelClickHandler}>
-          {isCollapsed ? 'Cancel' : 'Add Explanation'}
-        </button>
-        <div>
-          {isCollapsed &&
+        {!isCollapsed &&
+          <div>
             <AddExplanation
-              setQuestionExplanation={setQuestionExplanation}
-              addQuestionExplanation={addQuestionExplanation}
+              setQuestionExplanation={setQuestionExplanation}     
               questionExplanation={questionExplanation}
-              isCollapsed={isCollapsed}
-              setIsCollapsed={setIsCollapsed}
             />
-          }
-        </div>
+            <div>
+              <GenericButton 
+                onClick={cancelClickHandler}
+                text='Cancel'
+              />
+              <GenericButton 
+                onClick={addClickHandler}
+                text='Add'
+              />
+            </div>
+          </div>
+        }
       </CollapsedContent>
       {
         list.map((explanation, index) => (

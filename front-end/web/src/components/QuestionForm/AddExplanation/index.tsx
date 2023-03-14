@@ -8,34 +8,34 @@ import GenericTextarea from '../../Bricks/GenericTextarea';
 
 interface Props {
   setQuestionExplanation: (e: string) => void;
-  addQuestionExplanation: () => void;
-  setIsCollapsed: (e: boolean) => void;
-  isCollapsed: boolean;
+  // addQuestionExplanation: () => void;
+  // setIsCollapsed: (e: boolean) => void;
+  // isCollapsed: boolean;
   text?: string;
   questionExplanation: string;
 }
 
 const AddExplanation: React.FC<Props> = ({ 
-  addQuestionExplanation,
-  isCollapsed,
-  setIsCollapsed,
+  // addQuestionExplanation,
+  // isCollapsed,
+  // setIsCollapsed,
   setQuestionExplanation,
   questionExplanation  }) => {
 
-  const clickHandler = () => {
-    addQuestionExplanation();
-    setIsCollapsed(!isCollapsed);
-  }
+  // const clickHandler = () => {
+  //   addQuestionExplanation();
+  //   setIsCollapsed(!isCollapsed);
+  // }
 
   return (
     <Container>
-      <GenericLabel text='explanations:' />
+      <GenericLabel text='explanation:' />
         <GenericTextarea
           name="explanation"
           value={questionExplanation}
           onChange={setQuestionExplanation}
         />
-      <ConfirmButton onClick={clickHandler} disabled={!questionExplanation} />       
+      {/* <ConfirmButton onClick={clickHandler} disabled={!questionExplanation} />        */}
     </Container>
   );
 };

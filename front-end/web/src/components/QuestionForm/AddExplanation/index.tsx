@@ -1,50 +1,41 @@
 import React from 'react';
 import { Container } from './styles';
-// import { IoCloseCircle } from 'react-icons/io5';
+import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
+import GenericInput from '../../Bricks/GenericInput';
+import GenericLabel from '../../Bricks/GenericLabel';
+import GenericTextarea from '../../Bricks/GenericTextarea';
+
 
 interface Props {
-  onClickAdd: () => void;
-  onChangeAdd: (e: string) => void;
+  setQuestionExplanation: (e: string) => void;
+  addQuestionExplanation: () => void;
   setIsCollapsed: (e: boolean) => void;
   isCollapsed: boolean;
   text?: string;
-  valueAdd: string;
+  questionExplanation: string;
 }
 
 const AddExplanation: React.FC<Props> = ({ 
-  onChangeAdd,
+  addQuestionExplanation,
   isCollapsed,
   setIsCollapsed,
-  onClickAdd,
-  valueAdd  }) => {
+  setQuestionExplanation,
+  questionExplanation  }) => {
 
   const clickHandler = () => {
-    console.log('clickHandler');
-    onClickAdd();
+    addQuestionExplanation();
     setIsCollapsed(!isCollapsed);
   }
 
   return (
     <Container>
-        <label htmlFor='explanations'>
-          Explanation:
-        <input
-          type="text"
+      <GenericLabel text='explanations:' />
+        <GenericTextarea
           name="explanation"
-          value={valueAdd}
-          // onChange={(e) => setQuestionExplanation(e.target.value)}
-          onChange={(e) => onChangeAdd(e.target.value)}
-          />
-        </label>
-        <button
-            type="button"
-            // onClick={() => addQuestionExplanation()}
-            onClick={clickHandler}
-            // onClick={() => setIsCollapsed(!isCollapsed)}
-            disabled={!valueAdd}
-          >
-            Adicionar Explicação
-        </button>         
+          value={questionExplanation}
+          onChange={setQuestionExplanation}
+        />
+      <ConfirmButton onClick={clickHandler} disabled={!questionExplanation} />       
     </Container>
   );
 };

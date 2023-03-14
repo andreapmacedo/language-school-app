@@ -320,8 +320,8 @@ const QuestionForm = () => {
 
         <CardExplanation
           onClick={removeExplanation} list={queryAdd.explanations} 
-          onClickAdd={addQuestionExplanation} onChangeAdd={setQuestionExplanation}
-          valueAdd={questionExplanation} 
+          addQuestionExplanation={addQuestionExplanation} setQuestionExplanation={setQuestionExplanation}
+          questionExplanation={questionExplanation} 
         />
           
         <BoxTags>

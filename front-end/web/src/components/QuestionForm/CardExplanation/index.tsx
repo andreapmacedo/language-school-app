@@ -7,27 +7,36 @@ import EditButton from '../../Bricks/Buttons/EditButton';
 
 interface Props {
   onClick: (index: number) => void;
-  onClickAdd: () => void;
-  onChangeAdd: (e: string) => void;
   list: string[];
-  valueAdd: string;
+  addQuestionExplanation: () => void;
+  setQuestionExplanation: (e: string) => void;
+  questionExplanation: string;
 }
 
-const CardExplanation: React.FC<Props> = ({onClick, list, onClickAdd, onChangeAdd, valueAdd }) => {
+const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setQuestionExplanation, questionExplanation }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const cancelClickHandler = () => {
+    setIsCollapsed(!isCollapsed)
+    setQuestionExplanation(''); 
+  }
+
   
   return (
     <Container>
       <GenericLabel text="Explicações" />
       <CollapsedContent>
-        <button onClick={() => setIsCollapsed(!isCollapsed)}>
+        <button onClick={cancelClickHandler}>
           {isCollapsed ? 'Cancel' : 'Add Explanation'}
         </button>
         <div>
           {isCollapsed &&
             <AddExplanation
-              onChangeAdd={onChangeAdd} onClickAdd={onClickAdd} valueAdd={valueAdd}
-              isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed}
+              setQuestionExplanation={setQuestionExplanation}
+              addQuestionExplanation={addQuestionExplanation}
+              questionExplanation={questionExplanation}
+              isCollapsed={isCollapsed}
+              setIsCollapsed={setIsCollapsed}
             />
           }
         </div>

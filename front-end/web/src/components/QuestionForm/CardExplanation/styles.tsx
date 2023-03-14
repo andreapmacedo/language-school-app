@@ -4,10 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid #000;
-  border-radius: 4px;
-  /* align-items: center; */
-
+  border-radius: 3px;
+  background-color: #cff5fb;
   label {
     margin: 8px 16px;
   }
@@ -16,10 +14,11 @@ export const Container = styled.div`
 export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #fff;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #000;
-  border-radius: 5px;
+  border: 1px solid #b4efed;
+  border-radius: 3px;
   align-self: center;
   width: 96%;
 

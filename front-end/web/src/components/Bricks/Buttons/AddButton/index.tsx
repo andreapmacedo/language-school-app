@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from './styles';
 import { IoMdAddCircle } from 'react-icons/io';
 
-interface ButtonProps {
+interface Props {
   onClick: () => void;
   text?: string;
   color?: string;
@@ -10,7 +10,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const AddButton: React.FC<ButtonProps> = ({ onClick, text, color, size, disabled }) => {
+const AddButton: React.FC<Props> = ({ onClick, text, color, size, disabled }) => {
   return (
     <Container
     onClick={onClick}

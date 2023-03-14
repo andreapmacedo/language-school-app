@@ -3,7 +3,7 @@ import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
 import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
 import Select from '../../components/Bricks/Select';
-import GenericButton from '../../components/Bricks/GenericButton';
+import GenericButton from '../../components/Bricks/Buttons/GenericButton';
 import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
@@ -11,6 +11,7 @@ import { HiTrash } from 'react-icons/hi';
 import { CiEdit } from 'react-icons/ci';
 import { IoMdAddCircle } from 'react-icons/io';
 import { IoCloseCircle } from 'react-icons/io5';
+import CardExplanation from '../../components/QuestionForm/CardExplanation';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
@@ -255,6 +256,7 @@ const QuestionForm = () => {
   }
 
   const addQuestionExplanation = () => {
+    if(questionExplanation === '') return;
     setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, questionExplanation]});
     setQuestionExplanation('');
   }
@@ -313,9 +315,15 @@ const QuestionForm = () => {
           <Label htmlFor='level'>
             Level:
             <Select name="level" options={questionLevel} onChange={handleSelectInput}/>
-
           </Label>
         </BoxSetup>
+
+        <CardExplanation
+          onClick={removeExplanation} list={queryAdd.explanations} 
+          addQuestionExplanation={addQuestionExplanation} setQuestionExplanation={setQuestionExplanation}
+          questionExplanation={questionExplanation} 
+        />
+          
         <BoxTags>
           <Label htmlFor='answers'>
             Answers:
@@ -336,7 +344,7 @@ const QuestionForm = () => {
               Add Answers
           </Button>       */}
         </BoxTags>
-        <BoxCards>
+        {/* <BoxCards>
           <Label htmlFor='explanations'>
             Explanations:
           </Label>
@@ -344,7 +352,6 @@ const QuestionForm = () => {
               queryAdd.explanations.map((explanation, index) => (
                 <ListCard key={index}>
                   <p>{explanation}</p>
-
                   <div
                     onClick={() => removeExplanation(index)}
                   >
@@ -376,7 +383,7 @@ const QuestionForm = () => {
                 </ListCard>
               ))
             }
-        </BoxCards>
+        </BoxCards> */}
         
         <BoxTags>
           <Label htmlFor='questionTags'>
@@ -480,7 +487,7 @@ const QuestionForm = () => {
 
       </Form>
 
-      <BoxAdd>
+      {/* <BoxAdd>
         <Label htmlFor='explanations'>
           Explanation:
         <Input
@@ -496,7 +503,7 @@ const QuestionForm = () => {
           >
             Adicionar Explicação
         </Button>   
-      </BoxAdd>
+      </BoxAdd> */}
 
       <BoxAdd>
         <Label htmlFor='answers'>
@@ -540,16 +547,7 @@ const QuestionForm = () => {
             onChange={(e) => setTagInput(e.target.value)}
             />
           </Label>
-          {/* <Label htmlFor='search questionTags'>
-            Search Tags:
-          <Input
-            type="text"
-            name="search_tag"
-            value={modalSearchTag}
-            // onChange={(e) => setModalSearchTag(e.target.value)}
-            // onChange={handleSearchTag}
-            />
-          </Label> */}
+
           <Button
               type="button"
               onClick={() => setAddTagToDB()}

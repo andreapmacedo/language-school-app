@@ -3,35 +3,30 @@ import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
 import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
 import Select from '../../components/Bricks/Select';
-import GenericButton from '../../components/Bricks/Buttons/gens/firstGen/GenericButton';
 import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
 import { HiTrash } from 'react-icons/hi';
-import { CiEdit } from 'react-icons/ci';
-import { IoMdAddCircle } from 'react-icons/io';
-import { IoCloseCircle } from 'react-icons/io5';
-import CardExplanation from '../../components/QuestionForm/CardExplanation';
-import AnswerArea from '../../components/QuestionForm/AnswerArea';
+import ExplanationContent from '../../components/QuestionForm/ExplanationContent';
+import AnswerContent from '../../components/QuestionForm/AnswerContent';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
 
 // import { GlobalContext } from '../../providers/GlobalProvider';
-import { Container,
-    Form,
-    Input,
-    Button,
-    Label,
-    TagContainer,
-    TagWrapper,
-    BoxTags,
-    BoxSetup,
-    BoxAdd,
-    TagLeft,
-    TagRight,
-    ListCard,
-    BoxCards,
+import { 
+  Container,
+  Form,
+  Input,
+  Button,
+  Label,
+  TagContainer,
+  TagWrapper,
+  BoxTags,
+  BoxSetup,
+  BoxAdd,
+  TagLeft,
+  TagRight,
   } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
@@ -57,8 +52,8 @@ const QuestionForm = () => {
   };
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
-  const [answer, setAnswer] = useState('');
-  const [inputQuestionExplanation, setInputQuestionExplanation] = useState<string>('');
+  const [inputAnswer, setInputAnswer] = useState('');
+  const [inputExplanation, setInputExplanation] = useState<string>('');
   const [theme, setTheme] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<IAnswer[]>([]);
@@ -92,9 +87,9 @@ const QuestionForm = () => {
   }
 
   function addAnswer(): void {
-    const newAnswer: IAnswer = { answer, correct: isCorrect };
+    const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
     setAnswers([...answers, newAnswer]);    
-    setAnswer('');
+    setInputAnswer('');
   }
 
   function addTagToQuestion(tagToAdd: string): void {
@@ -252,10 +247,10 @@ const QuestionForm = () => {
     }
   }
 
-  const addQuestionExplanation = () => {
-    if(inputQuestionExplanation === '') return;
-    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputQuestionExplanation]});
-    setInputQuestionExplanation('');
+  const addExplanation = () => {
+    if(inputExplanation === '') return;
+    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputExplanation]});
+    setInputExplanation('');
   }
 
 
@@ -285,7 +280,6 @@ const QuestionForm = () => {
       <Form
         // onSubmit={handleSubmit}
       >
-
         <Label htmlFor='question'>
           Question:
           <Input
@@ -315,16 +309,23 @@ const QuestionForm = () => {
           </Label>
         </BoxSetup>
 
-        <CardExplanation
-          onClick={removeExplanation} list={queryAdd.explanations} 
-          addQuestionExplanation={addQuestionExplanation} setInputQuestionExplanation={setInputQuestionExplanation}
-          inputQuestionExplanation={inputQuestionExplanation} 
+        <ExplanationContent
+          onClick={removeExplanation}
+          list={queryAdd.explanations} 
+          addExplanation={addExplanation}
+          setInputExplanation={setInputExplanation}
+          inputExplanation={inputExplanation} 
         />
 
-        <AnswerArea
-
+        <AnswerContent
+          inputAnswer={inputAnswer}
+          setInputAnswer={setInputAnswer}
+          listAnswers={answers}
+          addAnswer={addAnswer}
+          removeAnswer={removeAnswer}
+          setIsCorrect={setIsCorrect}
+          isCorrect={isCorrect}
         />
-          
         <BoxTags>
           <Label htmlFor='answers'>
             Answers:
@@ -494,13 +495,13 @@ const QuestionForm = () => {
         <Input
           type="text"
           name="explanation"
-          value={inputQuestionExplanation}
-          onChange={(e) => setInputQuestionExplanation(e.target.value)}
+          value={inputExplanation}
+          onChange={(e) => setInputExplanation(e.target.value)}
           />
         </Label>
         <Button
             type="button"
-            onClick={() => addQuestionExplanation()}
+            onClick={() => addExplanation()}
           >
             Adicionar Explicação
         </Button>   
@@ -512,8 +513,8 @@ const QuestionForm = () => {
         <Input
           type="text"
           name="answers"
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
+          value={inputAnswer}
+          onChange={(e) => setInputAnswer(e.target.value)}
           />
         </Label>
         

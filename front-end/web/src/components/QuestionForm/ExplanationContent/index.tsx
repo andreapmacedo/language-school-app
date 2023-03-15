@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
-import CollapsedTextarea from '../CollapsedTextarea';
+// import CollapsedTextarea from '../CollapsedTextarea';
 import TrashButton from '../../Bricks/Buttons/TrashButton';
 import EditButton from '../../Bricks/Buttons/EditButton';
 import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
@@ -8,26 +8,27 @@ import CancelButton from '../../Bricks/Buttons/CancelButton';
 import AddButton from '../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
+import GenericAddInputArea from '../GenericAddInputArea';
 
 
 interface Props {
   onClick: (index: number) => void;
   list: string[];
-  addQuestionExplanation: () => void;
-  setInputQuestionExplanation: (e: string) => void;
-  inputQuestionExplanation: string;
+  addExplanation: () => void;
+  setInputExplanation: (e: string) => void;
+  inputExplanation: string;
 }
 
-const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setInputQuestionExplanation, inputQuestionExplanation }) => {
+const CardExplanation: React.FC<Props> = ({onClick, list, addExplanation, setInputExplanation, inputExplanation }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const cancelOnClickHandler = () => {
     setIsCollapsed(!isCollapsed)
-    setInputQuestionExplanation(''); 
+    setInputExplanation(''); 
   }
 
   const addOnClickHandler = () => {
-    addQuestionExplanation();
+    addExplanation();
     setIsCollapsed(!isCollapsed);
   }
 
@@ -42,13 +43,16 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation
       }
         {isCollapsed &&
           <CollapsedContent>
-            <CollapsedTextarea
-              setInputQuestionExplanation={setInputQuestionExplanation}     
-              inputQuestionExplanation={inputQuestionExplanation}
+            <GenericAddInputArea
+              setInput={setInputExplanation}     
+              input={inputExplanation}
+              name='explanation'
+              text='explanation:'
             />
+
             <ControllerPanel>
               <GenericButton
-                disabled={inputQuestionExplanation.length === 0} 
+                disabled={inputExplanation.length === 0} 
                 onClick={addOnClickHandler}
                 text='add'
                 icon={GiCheckMark}

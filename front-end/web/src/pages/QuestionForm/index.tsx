@@ -12,6 +12,7 @@ import { CiEdit } from 'react-icons/ci';
 import { IoMdAddCircle } from 'react-icons/io';
 import { IoCloseCircle } from 'react-icons/io5';
 import CardExplanation from '../../components/QuestionForm/CardExplanation';
+import AnswerArea from '../../components/QuestionForm/AnswerArea';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
@@ -68,7 +69,7 @@ const QuestionForm = () => {
   const [tagInput, setTagInput] = useState('');
   const [addTagOpen, setAddTagOpen] = useState(false);
 
-  // const [dbTags, setDbTags] = useState<string[]>([]);
+  
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
   const [modalSearchTag, setModalSearchTag] = useState('');
@@ -78,9 +79,6 @@ const QuestionForm = () => {
   const [questionType, setQuestionType] = useState(['Multiple', 'Boolean']);
   const [questionDifficulty, setQuestionDifficulty] = useState(['Easy', 'Medium', 'Hard']);
   const [questionCategory, setQuestionCategory] = useState(['Quiz', 'Test', 'Exam', 'Homework', 'Assignment', 'Project', 'Other']);
-
-  const [dbThemes, setDbThemes] = useState<string[]>([]);
-
 
 
   const openModal = () => {
@@ -321,6 +319,10 @@ const QuestionForm = () => {
           onClick={removeExplanation} list={queryAdd.explanations} 
           addQuestionExplanation={addQuestionExplanation} setQuestionExplanation={setQuestionExplanation}
           questionExplanation={questionExplanation} 
+        />
+
+        <AnswerArea
+
         />
           
         <BoxTags>

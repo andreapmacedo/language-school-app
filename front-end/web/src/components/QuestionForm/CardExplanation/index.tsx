@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
-import CollapsedTextarea from '../CollapsedTextarea';
+// import CollapsedTextarea from '../CollapsedTextarea';
 import TrashButton from '../../Bricks/Buttons/TrashButton';
 import EditButton from '../../Bricks/Buttons/EditButton';
 import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
@@ -8,6 +8,7 @@ import CancelButton from '../../Bricks/Buttons/CancelButton';
 import AddButton from '../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
+import GenericAddInputArea from '../GenericAddInputArea';
 
 
 interface Props {
@@ -42,10 +43,13 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addExplanation, setInp
       }
         {isCollapsed &&
           <CollapsedContent>
-            <CollapsedTextarea
-              setInputExplanation={setInputExplanation}     
-              inputExplanation={inputExplanation}
+            <GenericAddInputArea
+              setInput={setInputExplanation}     
+              input={inputExplanation}
+              name='explanation'
+              text='explanation:'
             />
+
             <ControllerPanel>
               <GenericButton
                 disabled={inputExplanation.length === 0} 

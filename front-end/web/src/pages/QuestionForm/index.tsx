@@ -3,16 +3,12 @@ import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
 import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
 import Select from '../../components/Bricks/Select';
-import GenericButton from '../../components/Bricks/Buttons/gens/firstGen/GenericButton';
 import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
 import { HiTrash } from 'react-icons/hi';
-import { CiEdit } from 'react-icons/ci';
-import { IoMdAddCircle } from 'react-icons/io';
-import { IoCloseCircle } from 'react-icons/io5';
 import CardExplanation from '../../components/QuestionForm/CardExplanation';
-import AnswerArea from '../../components/QuestionForm/AnswerArea';
+import AnswerContent from '../../components/QuestionForm/AnswerContent';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
@@ -322,14 +318,14 @@ const QuestionForm = () => {
           inputExplanation={inputExplanation} 
         />
 
-        <AnswerArea
+        <AnswerContent
           inputAnswer={inputAnswer}
           setInputAnswer={setInputAnswer}
           listAnswers={answers}
           addAnswer={addAnswer}
-          removeAnswer={removeAnswer} 
-
-
+          removeAnswer={removeAnswer}
+          setIsCorrect={setIsCorrect}
+          isCorrect={isCorrect}
         />
         <BoxTags>
           <Label htmlFor='answers'>

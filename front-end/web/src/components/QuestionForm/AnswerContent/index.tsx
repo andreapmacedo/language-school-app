@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
-import { Container } from './styles';
-
+import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
 import TrashButton from '../../Bricks/Buttons/TrashButton';
 import EditButton from '../../Bricks/Buttons/EditButton';
-import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
 import CancelButton from '../../Bricks/Buttons/CancelButton';
 import AddButton from '../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
+import AddInputArea from '../GenericAddInputArea';
+import AnswerAddInputArea from '../AnswerAddInputArea';
+
 
 interface Props {
-  
   listAnswers: object[];
   inputAnswer: string;
   setInputAnswer: (e: string) => void;
   addAnswer: () => void;
   removeAnswer: (index: number) => void;
+  setIsCorrect: (e: boolean) => void;
+  isCorrect: boolean;
 }
 
 const AnswerArea: React.FC<Props> = ({
@@ -24,6 +26,8 @@ const AnswerArea: React.FC<Props> = ({
   setInputAnswer,
   addAnswer,
   removeAnswer,
+  setIsCorrect,
+  isCorrect
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -46,15 +50,19 @@ const AnswerArea: React.FC<Props> = ({
           color='#eee'
         />
       }
-        {/* {isCollapsed &&
+        {isCollapsed &&
           <CollapsedContent>
-            <CollapsedTextarea
-              setInputExplanation={setInputExplanation}     
-              inputExplanation={inputExplanation}
+            <AnswerAddInputArea
+              setInput={setInputAnswer}     
+              input={inputAnswer}
+              name='answer'
+              text='Answer:'
+              setIsCorrect={setIsCorrect}
+              isCorrect={isCorrect}
             />
             <ControllerPanel>
               <GenericButton
-                disabled={inputExplanation.length === 0} 
+                disabled={inputAnswer.length === 0} 
                 onClick={addOnClickHandler}
                 text='add'
                 icon={GiCheckMark}
@@ -66,24 +74,22 @@ const AnswerArea: React.FC<Props> = ({
             </ControllerPanel>
           
           </CollapsedContent>
-        } */}
+        }
       {
-        listAnswers?.map((answer, index) => (
-          // <CardContent key={index} >
-          <div key={index} >
-            <p>{answer.answer}</p>
-            {/* <div>
+        listAnswers?.map(({answer}, index) => (
+          <CardContent key={index} >
+            <p>{answer}</p>
+            <div>
               <EditButton 
                 onClick={() => removeAnswer(index)}
               />
               <TrashButton 
                 onClick={() => removeAnswer(index)}
               />
-            </div> */}
-          </div>
+            </div>
+          </CardContent>
         ))
       }
-      {/* <>texto</> */}
     </Container>
   );
 };

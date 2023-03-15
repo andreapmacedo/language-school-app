@@ -89,11 +89,18 @@ const AnswerArea: React.FC<Props> = ({
           //     />
           //   </div>
           // </CardContent>
-          <AnswerCard answer={answer} index={index} />
+          
+            <AnswerCard
+              key={index}
+              index={index}
+              answer={answer}
+              removeAnswer={removeAnswer}
+            />
         ))
       }
       {/* {
         listAnswers?.map(({answer}, index) => (
+
           <CardContent key={index} >
             <p>{answer}</p>
             <div>

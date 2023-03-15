@@ -309,13 +309,6 @@ const QuestionForm = () => {
           </Label>
         </BoxSetup>
 
-        <ExplanationContent
-          onClick={removeExplanation}
-          list={queryAdd.explanations} 
-          addExplanation={addExplanation}
-          setInputExplanation={setInputExplanation}
-          inputExplanation={inputExplanation} 
-        />
 
         <AnswerContent
           inputAnswer={inputAnswer}
@@ -326,7 +319,18 @@ const QuestionForm = () => {
           setIsCorrect={setIsCorrect}
           isCorrect={isCorrect}
         />
-        <BoxTags>
+
+
+        <ExplanationContent
+          onClick={removeExplanation}
+          list={queryAdd.explanations} 
+          addExplanation={addExplanation}
+          setInputExplanation={setInputExplanation}
+          inputExplanation={inputExplanation}
+        />
+
+
+        {/* <BoxTags>
           <Label htmlFor='answers'>
             Answers:
             {
@@ -339,13 +343,7 @@ const QuestionForm = () => {
               ))
             }
           </Label>
-          {/* <Button
-              type="button"
-              onClick={() => addAnswer()}
-            >
-              Add Answers
-          </Button>       */}
-        </BoxTags>
+        </BoxTags> */}
         {/* <BoxCards>
           <Label htmlFor='explanations'>
             Explanations:
@@ -507,7 +505,7 @@ const QuestionForm = () => {
         </Button>   
       </BoxAdd> */}
 
-      <BoxAdd>
+      {/* <BoxAdd>
         <Label htmlFor='answers'>
           Answers:
         <Input
@@ -536,7 +534,7 @@ const QuestionForm = () => {
           >
             Adicionar Resposta
         </Button>        
-      </BoxAdd>
+      </BoxAdd> */}
       <BoxAdd>
       <h3>Tags</h3>
         <div>

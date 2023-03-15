@@ -11,38 +11,31 @@ import AnswerAddInputArea from '../AnswerAddInputArea';
 
 
 interface Props {
-  // listAnswers: object[];
-  // inputAnswer: string;
-  // setInputAnswer: (e: string) => void;
-  // addAnswer: () => void;
-  // removeAnswer: (index: number) => void;
-  // setIsCorrect: (e: boolean) => void;
-  // isCorrect: boolean;
+  removeAnswer: (index: number) => void;
   answer: object;
+  index: number;
 }
 
 const AnswerCard: React.FC<Props> = ({
-  answer
+  answer,
+  removeAnswer,
+  index
 }) => {
 
-
   return (
-
-    
-
     <Container>
       {
         <CardContent>
           <p>{answer.answer}</p>
-          {/* <div>
+          <div>
+            {answer.correct && <p>Correct</p>}
             <EditButton 
               onClick={() => removeAnswer(index)}
             />
             <TrashButton 
               onClick={() => removeAnswer(index)}
             />
-          </div> */}
-          {answer.correct && <p>Correct</p>}
+          </div>
         </CardContent>
       }
     </Container>

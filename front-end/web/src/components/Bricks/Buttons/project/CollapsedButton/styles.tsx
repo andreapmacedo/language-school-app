@@ -1,32 +1,25 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  gap: 8px;
+  color: #114677;
   display: flex;
   align-items: center;
-  align-content: center;
-  background-color: transparent;
-  
-  border: none;
-  
-  padding: 0px 16px;
-  color: green;
-  font-size: 16px;
-  font-weight: 500;
+  justify-content: center;
+  padding: 8px 0;
+  width: 150px;
+  border-radius: 4px;
   font-style: italic;
-  cursor: pointer;
-  margin: 8px 0px;
-
   &:hover {
+    cursor: pointer;
+    /* background-color: #0069d9; */
     text-decoration: underline;
   }
 
-
   &[disabled] {
-    color: #999;
-    cursor: not-allowed;
-    text-decoration: none;
+    opacity: 0.5;
+    pointer-events: none;
   }
+
 
   /* .icon{
     width: 16px;
@@ -34,6 +27,5 @@ export const Container = styled.div`
     fill: #3a77ff;
     margin-right: 8px;
   } */
-
 
 `;

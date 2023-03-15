@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
-import CollapsedTextarea from '../CollapsedTextarea';
+import { Container } from './styles';
+
 import TrashButton from '../../Bricks/Buttons/TrashButton';
 import EditButton from '../../Bricks/Buttons/EditButton';
 import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
@@ -9,26 +9,25 @@ import AddButton from '../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
 
-
 interface Props {
-  onClick: (index: number) => void;
-  list: string[];
-  addQuestionExplanation: () => void;
-  setInputQuestionExplanation: (e: string) => void;
-  inputQuestionExplanation: string;
+  // onClick: (index: number) => void;
+  // list: string[];
+  // addQuestionExplanation: () => void;
+  // setInputQuestionExplanation: (e: string) => void;
+  // inputQuestionExplanation: string;
 }
 
-const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setInputQuestionExplanation, inputQuestionExplanation }) => {
+const AnswerArea: React.FC<Props> = ({}) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const cancelOnClickHandler = () => {
-    setIsCollapsed(!isCollapsed)
-    setInputQuestionExplanation(''); 
+    // setIsCollapsed(!isCollapsed)
+    // setInputQuestionExplanation(''); 
   }
 
   const addOnClickHandler = () => {
-    addQuestionExplanation();
-    setIsCollapsed(!isCollapsed);
+    // addQuestionExplanation();
+    // setIsCollapsed(!isCollapsed);
   }
 
   return (
@@ -36,11 +35,11 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation
       {!isCollapsed &&
         <AddButton 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          text='Add Explanation'
+          text='Add Answer'
           color='#eee'
         />
       }
-        {isCollapsed &&
+        {/* {isCollapsed &&
           <CollapsedContent>
             <CollapsedTextarea
               setInputQuestionExplanation={setInputQuestionExplanation}     
@@ -60,24 +59,24 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation
             </ControllerPanel>
           
           </CollapsedContent>
-        }
+        } */}
       {
-        list.map((explanation, index) => (
-          <CardContent key={index} >
-            <p>{explanation}</p>
-            <div>
-              <EditButton 
-                onClick={() => onClick(index)}
-              />
-              <TrashButton 
-                onClick={() => onClick(index)}
-              />
-            </div>
-          </CardContent>
-        ))
+        // list.map((explanation, index) => (
+        //   <CardContent key={index} >
+        //     <p>{explanation}</p>
+        //     <div>
+        //       <EditButton 
+        //         onClick={() => onClick(index)}
+        //       />
+        //       <TrashButton 
+        //         onClick={() => onClick(index)}
+        //       />
+        //     </div>
+        //   </CardContent>
+        // ))
       }
     </Container>
   );
 };
 
-export default CardExplanation;
+export default AnswerArea;

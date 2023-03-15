@@ -3,7 +3,7 @@ import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
 import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
 import Select from '../../components/Bricks/Select';
-import GenericButton from '../../components/Bricks/Buttons/GenericButton';
+import GenericButton from '../../components/Bricks/Buttons/gens/firstGen/GenericButton';
 import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
@@ -12,6 +12,7 @@ import { CiEdit } from 'react-icons/ci';
 import { IoMdAddCircle } from 'react-icons/io';
 import { IoCloseCircle } from 'react-icons/io5';
 import CardExplanation from '../../components/QuestionForm/CardExplanation';
+import AnswerArea from '../../components/QuestionForm/AnswerArea';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
@@ -22,7 +23,6 @@ import { Container,
     Input,
     Button,
     Label,
-    // Select,
     TagContainer,
     TagWrapper,
     BoxTags,
@@ -58,7 +58,7 @@ const QuestionForm = () => {
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
   const [answer, setAnswer] = useState('');
-  const [questionExplanation, setQuestionExplanation] = useState<string>('');
+  const [inputQuestionExplanation, setInputQuestionExplanation] = useState<string>('');
   const [theme, setTheme] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<IAnswer[]>([]);
@@ -69,7 +69,7 @@ const QuestionForm = () => {
   const [tagInput, setTagInput] = useState('');
   const [addTagOpen, setAddTagOpen] = useState(false);
 
-  // const [dbTags, setDbTags] = useState<string[]>([]);
+  
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
   const [modalSearchTag, setModalSearchTag] = useState('');
@@ -79,9 +79,6 @@ const QuestionForm = () => {
   const [questionType, setQuestionType] = useState(['Multiple', 'Boolean']);
   const [questionDifficulty, setQuestionDifficulty] = useState(['Easy', 'Medium', 'Hard']);
   const [questionCategory, setQuestionCategory] = useState(['Quiz', 'Test', 'Exam', 'Homework', 'Assignment', 'Project', 'Other']);
-
-  const [dbThemes, setDbThemes] = useState<string[]>([]);
-
 
 
   const openModal = () => {
@@ -256,9 +253,9 @@ const QuestionForm = () => {
   }
 
   const addQuestionExplanation = () => {
-    if(questionExplanation === '') return;
-    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, questionExplanation]});
-    setQuestionExplanation('');
+    if(inputQuestionExplanation === '') return;
+    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputQuestionExplanation]});
+    setInputQuestionExplanation('');
   }
 
 
@@ -320,8 +317,12 @@ const QuestionForm = () => {
 
         <CardExplanation
           onClick={removeExplanation} list={queryAdd.explanations} 
-          addQuestionExplanation={addQuestionExplanation} setQuestionExplanation={setQuestionExplanation}
-          questionExplanation={questionExplanation} 
+          addQuestionExplanation={addQuestionExplanation} setInputQuestionExplanation={setInputQuestionExplanation}
+          inputQuestionExplanation={inputQuestionExplanation} 
+        />
+
+        <AnswerArea
+
         />
           
         <BoxTags>
@@ -493,8 +494,8 @@ const QuestionForm = () => {
         <Input
           type="text"
           name="explanation"
-          value={questionExplanation}
-          onChange={(e) => setQuestionExplanation(e.target.value)}
+          value={inputQuestionExplanation}
+          onChange={(e) => setInputQuestionExplanation(e.target.value)}
           />
         </Label>
         <Button

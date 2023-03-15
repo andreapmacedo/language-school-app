@@ -13,21 +13,21 @@ import { GiCheckMark } from 'react-icons/gi';
 interface Props {
   onClick: (index: number) => void;
   list: string[];
-  addQuestionExplanation: () => void;
-  setInputQuestionExplanation: (e: string) => void;
-  inputQuestionExplanation: string;
+  addExplanation: () => void;
+  setInputExplanation: (e: string) => void;
+  inputExplanation: string;
 }
 
-const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setInputQuestionExplanation, inputQuestionExplanation }) => {
+const CardExplanation: React.FC<Props> = ({onClick, list, addExplanation, setInputExplanation, inputExplanation }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const cancelOnClickHandler = () => {
     setIsCollapsed(!isCollapsed)
-    setInputQuestionExplanation(''); 
+    setInputExplanation(''); 
   }
 
   const addOnClickHandler = () => {
-    addQuestionExplanation();
+    addExplanation();
     setIsCollapsed(!isCollapsed);
   }
 
@@ -43,12 +43,12 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation
         {isCollapsed &&
           <CollapsedContent>
             <CollapsedTextarea
-              setInputQuestionExplanation={setInputQuestionExplanation}     
-              inputQuestionExplanation={inputQuestionExplanation}
+              setInputExplanation={setInputExplanation}     
+              inputExplanation={inputExplanation}
             />
             <ControllerPanel>
               <GenericButton
-                disabled={inputQuestionExplanation.length === 0} 
+                disabled={inputExplanation.length === 0} 
                 onClick={addOnClickHandler}
                 text='add'
                 icon={GiCheckMark}

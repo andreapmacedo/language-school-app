@@ -5,22 +5,22 @@ import GenericTextarea from '../../Bricks/GenericTextarea';
 
 
 interface Props {
-  setInputQuestionExplanation: (e: string) => void;
+  setInputExplanation: (e: string) => void;
   text?: string;
-  inputQuestionExplanation: string;
+  inputExplanation: string;
 }
 
 const CollapsedTextarea: React.FC<Props> = ({ 
-  setInputQuestionExplanation,
-  inputQuestionExplanation  }) => {
+  setInputExplanation,
+  inputExplanation  }) => {
 
   return (
     <Container>
       <GenericLabel text='Explanation:' />
       <GenericTextarea
         name="explanation"
-        value={inputQuestionExplanation}
-        onChange={setInputQuestionExplanation}
+        value={inputExplanation}
+        onChange={setInputExplanation}
       />
     </Container>
   );

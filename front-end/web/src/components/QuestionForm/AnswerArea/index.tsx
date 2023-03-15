@@ -14,7 +14,7 @@ interface Props {
   // list: object[];
   inputAnswer: string;
   setInputAnswer: (e: string) => void;
-  // addQuestionExplanation: () => void;
+  // addExplanation: () => void;
 }
 
 const AnswerArea: React.FC<Props> = ({}) => {
@@ -22,11 +22,11 @@ const AnswerArea: React.FC<Props> = ({}) => {
 
   const cancelOnClickHandler = () => {
     // setIsCollapsed(!isCollapsed)
-    // setInputQuestionExplanation(''); 
+    // setInputExplanation(''); 
   }
 
   const addOnClickHandler = () => {
-    // addQuestionExplanation();
+    // addExplanation();
     // setIsCollapsed(!isCollapsed);
   }
 
@@ -42,12 +42,12 @@ const AnswerArea: React.FC<Props> = ({}) => {
         {/* {isCollapsed &&
           <CollapsedContent>
             <CollapsedTextarea
-              setInputQuestionExplanation={setInputQuestionExplanation}     
-              inputQuestionExplanation={inputQuestionExplanation}
+              setInputExplanation={setInputExplanation}     
+              inputExplanation={inputExplanation}
             />
             <ControllerPanel>
               <GenericButton
-                disabled={inputQuestionExplanation.length === 0} 
+                disabled={inputExplanation.length === 0} 
                 onClick={addOnClickHandler}
                 text='add'
                 icon={GiCheckMark}

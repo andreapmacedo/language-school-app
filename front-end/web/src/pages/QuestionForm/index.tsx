@@ -58,7 +58,7 @@ const QuestionForm = () => {
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
   const [inputAnswer, setInputAnswer] = useState('');
-  const [inputQuestionExplanation, setInputQuestionExplanation] = useState<string>('');
+  const [inputExplanation, setInputExplanation] = useState<string>('');
   const [theme, setTheme] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<IAnswer[]>([]);
@@ -252,10 +252,10 @@ const QuestionForm = () => {
     }
   }
 
-  const addQuestionExplanation = () => {
-    if(inputQuestionExplanation === '') return;
-    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputQuestionExplanation]});
-    setInputQuestionExplanation('');
+  const addExplanation = () => {
+    if(inputExplanation === '') return;
+    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputExplanation]});
+    setInputExplanation('');
   }
 
 
@@ -317,9 +317,9 @@ const QuestionForm = () => {
         <CardExplanation
           onClick={removeExplanation}
           list={queryAdd.explanations} 
-          addQuestionExplanation={addQuestionExplanation}
-          setInputQuestionExplanation={setInputQuestionExplanation}
-          inputQuestionExplanation={inputQuestionExplanation} 
+          addExplanation={addExplanation}
+          setInputExplanation={setInputExplanation}
+          inputExplanation={inputExplanation} 
         />
 
         <AnswerArea
@@ -498,13 +498,13 @@ const QuestionForm = () => {
         <Input
           type="text"
           name="explanation"
-          value={inputQuestionExplanation}
-          onChange={(e) => setInputQuestionExplanation(e.target.value)}
+          value={inputExplanation}
+          onChange={(e) => setInputExplanation(e.target.value)}
           />
         </Label>
         <Button
             type="button"
-            onClick={() => addQuestionExplanation()}
+            onClick={() => addExplanation()}
           >
             Adicionar Explicação
         </Button>   

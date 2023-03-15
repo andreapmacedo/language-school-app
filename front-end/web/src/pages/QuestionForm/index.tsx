@@ -57,7 +57,7 @@ const QuestionForm = () => {
   };
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
-  const [answer, setAnswer] = useState('');
+  const [inputAnswer, setInputAnswer] = useState('');
   const [inputQuestionExplanation, setInputQuestionExplanation] = useState<string>('');
   const [theme, setTheme] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
@@ -92,9 +92,9 @@ const QuestionForm = () => {
   }
 
   function addAnswer(): void {
-    const newAnswer: IAnswer = { answer, correct: isCorrect };
+    const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
     setAnswers([...answers, newAnswer]);    
-    setAnswer('');
+    setInputAnswer('');
   }
 
   function addTagToQuestion(tagToAdd: string): void {
@@ -285,7 +285,6 @@ const QuestionForm = () => {
       <Form
         // onSubmit={handleSubmit}
       >
-
         <Label htmlFor='question'>
           Question:
           <Input
@@ -316,15 +315,20 @@ const QuestionForm = () => {
         </BoxSetup>
 
         <CardExplanation
-          onClick={removeExplanation} list={queryAdd.explanations} 
-          addQuestionExplanation={addQuestionExplanation} setInputQuestionExplanation={setInputQuestionExplanation}
+          onClick={removeExplanation}
+          list={queryAdd.explanations} 
+          addQuestionExplanation={addQuestionExplanation}
+          setInputQuestionExplanation={setInputQuestionExplanation}
           inputQuestionExplanation={inputQuestionExplanation} 
         />
 
         <AnswerArea
+          inputAnswer={inputAnswer}
+          setInputAnswer={setInputAnswer}
+          // list={answers} 
+
 
         />
-          
         <BoxTags>
           <Label htmlFor='answers'>
             Answers:
@@ -512,8 +516,8 @@ const QuestionForm = () => {
         <Input
           type="text"
           name="answers"
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
+          value={inputAnswer}
+          onChange={(e) => setInputAnswer(e.target.value)}
           />
         </Label>
         

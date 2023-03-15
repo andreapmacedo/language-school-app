@@ -11,10 +11,10 @@ import { GiCheckMark } from 'react-icons/gi';
 
 interface Props {
   // onClick: (index: number) => void;
-  // list: string[];
+  // list: object[];
+  inputAnswer: string;
+  setInputAnswer: (e: string) => void;
   // addQuestionExplanation: () => void;
-  // setInputQuestionExplanation: (e: string) => void;
-  // inputQuestionExplanation: string;
 }
 
 const AnswerArea: React.FC<Props> = ({}) => {

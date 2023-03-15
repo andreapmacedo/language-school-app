@@ -10,24 +10,31 @@ import GenericButton from '../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
 
 interface Props {
-  // onClick: (index: number) => void;
-  // list: object[];
+  
+  listAnswers: object[];
   inputAnswer: string;
   setInputAnswer: (e: string) => void;
-  // addExplanation: () => void;
+  addAnswer: () => void;
+  removeAnswer: (index: number) => void;
 }
 
-const AnswerArea: React.FC<Props> = ({}) => {
+const AnswerArea: React.FC<Props> = ({
+  listAnswers,
+  inputAnswer,
+  setInputAnswer,
+  addAnswer,
+  removeAnswer,
+}) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const cancelOnClickHandler = () => {
-    // setIsCollapsed(!isCollapsed)
-    // setInputExplanation(''); 
+    setIsCollapsed(!isCollapsed)
+    setInputAnswer(''); 
   }
 
   const addOnClickHandler = () => {
-    // addExplanation();
-    // setIsCollapsed(!isCollapsed);
+    addAnswer();
+    setIsCollapsed(!isCollapsed);
   }
 
   return (
@@ -61,20 +68,22 @@ const AnswerArea: React.FC<Props> = ({}) => {
           </CollapsedContent>
         } */}
       {
-        // list.map((explanation, index) => (
-        //   <CardContent key={index} >
-        //     <p>{explanation}</p>
-        //     <div>
-        //       <EditButton 
-        //         onClick={() => onClick(index)}
-        //       />
-        //       <TrashButton 
-        //         onClick={() => onClick(index)}
-        //       />
-        //     </div>
-        //   </CardContent>
-        // ))
+        listAnswers?.map((answer, index) => (
+          // <CardContent key={index} >
+          <div key={index} >
+            <p>{answer.answer}</p>
+            {/* <div>
+              <EditButton 
+                onClick={() => removeAnswer(index)}
+              />
+              <TrashButton 
+                onClick={() => removeAnswer(index)}
+              />
+            </div> */}
+          </div>
+        ))
       }
+      {/* <>texto</> */}
     </Container>
   );
 };

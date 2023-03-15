@@ -325,7 +325,9 @@ const QuestionForm = () => {
         <AnswerArea
           inputAnswer={inputAnswer}
           setInputAnswer={setInputAnswer}
-          // list={answers} 
+          listAnswers={answers}
+          addAnswer={addAnswer}
+          removeAnswer={removeAnswer} 
 
 
         />

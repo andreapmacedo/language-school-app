@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
-// import CollapsedTextarea from '../CollapsedTextarea';
-import TrashButton from '../../Bricks/Buttons/TrashButton';
-import EditButton from '../../Bricks/Buttons/EditButton';
-import ConfirmButton from '../../Bricks/Buttons/ConfirmButton';
-import CancelButton from '../../Bricks/Buttons/CancelButton';
-import AddButton from '../../Bricks/Buttons/project/AddButton';
-import GenericButton from '../../Bricks/Buttons/GenericButton';
+import TrashButton from '../../../Bricks/Buttons/TrashButton';
+import EditButton from '../../../Bricks/Buttons/EditButton';
+import CancelButton from '../../../Bricks/Buttons/CancelButton';
+import AddButton from '../../../Bricks/Buttons/project/AddButton';
+import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
-import GenericAddInputArea from '../GenericAddInputArea';
+import GenericAddInputArea from '../../GenericAddInputArea';
 
 
 interface Props {
@@ -19,7 +17,7 @@ interface Props {
   inputExplanation: string;
 }
 
-const CardExplanation: React.FC<Props> = ({onClick, list, addExplanation, setInputExplanation, inputExplanation }) => {
+const ExplanationContent: React.FC<Props> = ({onClick, list, addExplanation, setInputExplanation, inputExplanation }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const cancelOnClickHandler = () => {
@@ -84,4 +82,4 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addExplanation, setInp
   );
 };
 
-export default CardExplanation;
+export default ExplanationContent;

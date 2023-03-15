@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from './styles';
-import GenericLabel from '../../Bricks/GenericLabel';
-import GenericTextarea from '../../Bricks/GenericTextarea';
+import GenericLabel from '../../../Bricks/GenericLabel';
+import GenericTextarea from '../../../Bricks/GenericTextarea';
 
 interface Props {
   setInput: (e: string) => void;

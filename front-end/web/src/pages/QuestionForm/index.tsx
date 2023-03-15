@@ -7,8 +7,9 @@ import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
 import { HiTrash } from 'react-icons/hi';
-import ExplanationContent from '../../components/QuestionForm/ExplanationContent';
-import AnswerContent from '../../components/QuestionForm/AnswerContent';
+import ExplanationContent from '../../components/QuestionForm/Explanation/ExplanationContent';
+import AnswerContent from '../../components/QuestionForm/Answer/AnswerContent';
+import TagContent from '../../components/QuestionForm/Tags/TagContent';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
@@ -328,6 +329,7 @@ const QuestionForm = () => {
           setInputExplanation={setInputExplanation}
           inputExplanation={inputExplanation}
         />
+        <TagContent />
 
 
         {/* <BoxTags>

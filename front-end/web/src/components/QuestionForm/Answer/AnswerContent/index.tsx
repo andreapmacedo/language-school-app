@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
-import TrashButton from '../../Bricks/Buttons/TrashButton';
-import EditButton from '../../Bricks/Buttons/EditButton';
-import CancelButton from '../../Bricks/Buttons/CancelButton';
-import AddButton from '../../Bricks/Buttons/project/AddButton';
-import GenericButton from '../../Bricks/Buttons/GenericButton';
+import TrashButton from '../../../Bricks/Buttons/TrashButton';
+import EditButton from '../../../Bricks/Buttons/EditButton';
+import CancelButton from '../../../Bricks/Buttons/CancelButton';
+import AddButton from '../../../Bricks/Buttons/project/AddButton';
+import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
-import AddInputArea from '../GenericAddInputArea';
+import AddInputArea from '../../GenericAddInputArea';
 import AnswerAddInputArea from '../AnswerAddInputArea';
 import AnswerCard from '../AnswerCard';
 
@@ -21,7 +21,7 @@ interface Props {
   isCorrect: boolean;
 }
 
-const AnswerArea: React.FC<Props> = ({
+const AnswerContent: React.FC<Props> = ({
   listAnswers,
   inputAnswer,
   setInputAnswer,
@@ -118,4 +118,4 @@ const AnswerArea: React.FC<Props> = ({
   );
 };
 
-export default AnswerArea;
+export default AnswerContent;

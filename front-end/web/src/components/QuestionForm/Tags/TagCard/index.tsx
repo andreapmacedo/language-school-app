@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
-import TrashButton from '../../Bricks/Buttons/TrashButton';
-import EditButton from '../../Bricks/Buttons/EditButton';
-import CancelButton from '../../Bricks/Buttons/CancelButton';
-import AddButton from '../../Bricks/Buttons/project/AddButton';
-import GenericButton from '../../Bricks/Buttons/GenericButton';
+import TrashButton from '../../../Bricks/Buttons/TrashButton';
+import EditButton from '../../../Bricks/Buttons/EditButton';
+import CancelButton from '../../../Bricks/Buttons/CancelButton';
+import AddButton from '../../../Bricks/Buttons/project/AddButton';
+import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
-import AddInputArea from '../GenericAddInputArea';
-import AnswerAddInputArea from '../AnswerAddInputArea';
+import AddInputArea from '../../GenericAddInputArea';
+import AnswerAddInputArea from '../TagAddInputArea';
 
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
   index: number;
 }
 
-const AnswerCard: React.FC<Props> = ({
+const TagCard: React.FC<Props> = ({
   answer,
   removeAnswer,
   index
@@ -42,4 +42,4 @@ const AnswerCard: React.FC<Props> = ({
   );
 };
 
-export default AnswerCard;
+export default TagCard;

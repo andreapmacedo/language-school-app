@@ -7,27 +7,26 @@ import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
 import Modal from "react-modal";
 import { HiTrash } from 'react-icons/hi';
-import CardExplanation from '../../components/QuestionForm/CardExplanation';
+import ExplanationContent from '../../components/QuestionForm/ExplanationContent';
 import AnswerContent from '../../components/QuestionForm/AnswerContent';
 
 // import Header from '../../components/Header';
 // import GenericModal from '../../components/GenericModal';
 
 // import { GlobalContext } from '../../providers/GlobalProvider';
-import { Container,
-    Form,
-    Input,
-    Button,
-    Label,
-    TagContainer,
-    TagWrapper,
-    BoxTags,
-    BoxSetup,
-    BoxAdd,
-    TagLeft,
-    TagRight,
-    ListCard,
-    BoxCards,
+import { 
+  Container,
+  Form,
+  Input,
+  Button,
+  Label,
+  TagContainer,
+  TagWrapper,
+  BoxTags,
+  BoxSetup,
+  BoxAdd,
+  TagLeft,
+  TagRight,
   } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
@@ -310,7 +309,7 @@ const QuestionForm = () => {
           </Label>
         </BoxSetup>
 
-        <CardExplanation
+        <ExplanationContent
           onClick={removeExplanation}
           list={queryAdd.explanations} 
           addExplanation={addExplanation}

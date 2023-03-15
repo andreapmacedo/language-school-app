@@ -8,6 +8,7 @@ import GenericButton from '../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
 import AddInputArea from '../GenericAddInputArea';
 import AnswerAddInputArea from '../AnswerAddInputArea';
+import AnswerCard from '../AnswerCard';
 
 
 interface Props {
@@ -76,6 +77,22 @@ const AnswerArea: React.FC<Props> = ({
           </CollapsedContent>
         }
       {
+        listAnswers?.map((answer, index) => (
+          // <CardContent key={index} >
+          //   <p>{answer}</p>
+          //   <div>
+          //     <EditButton 
+          //       onClick={() => removeAnswer(index)}
+          //     />
+          //     <TrashButton 
+          //       onClick={() => removeAnswer(index)}
+          //     />
+          //   </div>
+          // </CardContent>
+          <AnswerCard answer={answer} index={index} />
+        ))
+      }
+      {/* {
         listAnswers?.map(({answer}, index) => (
           <CardContent key={index} >
             <p>{answer}</p>
@@ -89,7 +106,7 @@ const AnswerArea: React.FC<Props> = ({
             </div>
           </CardContent>
         ))
-      }
+      } */}
     </Container>
   );
 };

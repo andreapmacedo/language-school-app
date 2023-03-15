@@ -58,7 +58,7 @@ const QuestionForm = () => {
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
   const [answer, setAnswer] = useState('');
-  const [questionExplanation, setQuestionExplanation] = useState<string>('');
+  const [inputQuestionExplanation, setInputQuestionExplanation] = useState<string>('');
   const [theme, setTheme] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<IAnswer[]>([]);
@@ -253,9 +253,9 @@ const QuestionForm = () => {
   }
 
   const addQuestionExplanation = () => {
-    if(questionExplanation === '') return;
-    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, questionExplanation]});
-    setQuestionExplanation('');
+    if(inputQuestionExplanation === '') return;
+    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputQuestionExplanation]});
+    setInputQuestionExplanation('');
   }
 
 
@@ -317,8 +317,8 @@ const QuestionForm = () => {
 
         <CardExplanation
           onClick={removeExplanation} list={queryAdd.explanations} 
-          addQuestionExplanation={addQuestionExplanation} setQuestionExplanation={setQuestionExplanation}
-          questionExplanation={questionExplanation} 
+          addQuestionExplanation={addQuestionExplanation} setInputQuestionExplanation={setInputQuestionExplanation}
+          inputQuestionExplanation={inputQuestionExplanation} 
         />
 
         <AnswerArea
@@ -494,8 +494,8 @@ const QuestionForm = () => {
         <Input
           type="text"
           name="explanation"
-          value={questionExplanation}
-          onChange={(e) => setQuestionExplanation(e.target.value)}
+          value={inputQuestionExplanation}
+          onChange={(e) => setInputQuestionExplanation(e.target.value)}
           />
         </Label>
         <Button

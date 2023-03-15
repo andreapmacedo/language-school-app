@@ -14,16 +14,16 @@ interface Props {
   onClick: (index: number) => void;
   list: string[];
   addQuestionExplanation: () => void;
-  setQuestionExplanation: (e: string) => void;
-  questionExplanation: string;
+  setInputQuestionExplanation: (e: string) => void;
+  inputQuestionExplanation: string;
 }
 
-const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setQuestionExplanation, questionExplanation }) => {
+const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation, setInputQuestionExplanation, inputQuestionExplanation }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const cancelOnClickHandler = () => {
     setIsCollapsed(!isCollapsed)
-    setQuestionExplanation(''); 
+    setInputQuestionExplanation(''); 
   }
 
   const addOnClickHandler = () => {
@@ -43,12 +43,12 @@ const CardExplanation: React.FC<Props> = ({onClick, list, addQuestionExplanation
         {isCollapsed &&
           <CollapsedContent>
             <CollapsedTextarea
-              setQuestionExplanation={setQuestionExplanation}     
-              questionExplanation={questionExplanation}
+              setInputQuestionExplanation={setInputQuestionExplanation}     
+              inputQuestionExplanation={inputQuestionExplanation}
             />
             <ControllerPanel>
               <GenericButton
-                disabled={questionExplanation.length === 0} 
+                disabled={inputQuestionExplanation.length === 0} 
                 onClick={addOnClickHandler}
                 text='add'
                 icon={GiCheckMark}

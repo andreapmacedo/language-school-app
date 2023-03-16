@@ -39,11 +39,11 @@ const QuestionForm = () => {
     difficulty: '',
     type: '',
     level: '',
-    correct_answer: '',
+    // correct_answer: '',
     question: '',
     explanations: [],
     answers: [],
-    themes: [],
+    // themes: [],
     tags: [],
     // createdAt: firebase.firestore.Timestamp;
   };
@@ -133,27 +133,20 @@ const QuestionForm = () => {
     setQueryAdd(query);
   }
 
-  // useEffect(() => {
-  //   updateQuery({
-  //     ...queryAdd,
-  //     answers: answers.map((ans) => ans),
-  //     // answers: answers.map((ans) => ans.answer),
-  //   });
-  // }, [answers]);
+  useEffect(() => {
+    updateQuery({
+      ...queryAdd,
+      answers: answers.map((ans) => ans),
+      // answers: answers.map((ans) => ans.answer),
+    });
+  }, [answers]);
 
-  // useEffect(() => {
-  //   updateQuery({
-  //     ...queryAdd,
-  //     themes: themes.map((theme) => theme)
-  //   });
-  // }, [themes]);
-
-  // useEffect(() => {
-  //   updateQuery({
-  //     ...queryAdd,
-  //     tags: tags.map((tag) => tag)
-  //   });
-  // }, [tags]);
+  useEffect(() => {
+    updateQuery({
+      ...queryAdd,
+      tags: questionTags.map((tag) => tag)
+    });
+  }, [questionTags]);
 
   /**
    * Get tags from DB when component is mounted

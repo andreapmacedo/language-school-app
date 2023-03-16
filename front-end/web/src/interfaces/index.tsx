@@ -10,11 +10,11 @@ export interface IQuestionQuery {
   difficulty: string;
   type: string;
   level: string;
-  correct_answer: string;
+  // correct_answer: string;
   question: string;
   explanations: string[];
   answers: IAnswer[];
-  themes: string[];
+  // themes: string[];
   tags: string[];
 }
 

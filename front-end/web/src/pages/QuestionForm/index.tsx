@@ -329,7 +329,20 @@ const QuestionForm = () => {
           setInputExplanation={setInputExplanation}
           inputExplanation={inputExplanation}
         />
-        <TagContent />
+        <TagContent 
+          addTagToQuestion={addTagToQuestion}
+          questionTags={questionTags}
+          removeTag={removeTag}
+          dbTags={dbTags}
+          // modalSearchTag={modalSearchTag}
+          // handleSearchTag={handleSearchTag}
+          tagInput={tagInput}
+          setRemoveTagFromDB={setRemoveTagFromDB}
+          setDbTags={setDbTags}
+          setDbTagChange={setDbTagChange}
+          setTagInput={setTagInput}
+          setAddTagToDB={setAddTagToDB}
+        />
 
 
         {/* <BoxTags>

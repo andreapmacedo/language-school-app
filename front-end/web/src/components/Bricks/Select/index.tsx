@@ -19,7 +19,7 @@ const Select: React.FC<SelectProps> = ({ name, options, onChange }) => {
 
   return (
     <Container value={selectedOption} onChange={handleOptionChange}>
-      {/* <option value="">Select an option</option> */}
+      <option value="">Select</option>
       {options.map((option) => (
         <option key={option} value={option}>
           {option}

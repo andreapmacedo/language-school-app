@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { addQuestion } from '../../firebase/questions';
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../firebase/tags';
+import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
+import Select from '../../components/Bricks/Select';
 
 import GenericControledTextarea from '../../components/Bricks/GenericControledTextarea';
+// import Modal from "react-modal";
+
 import ExplanationContent from '../../components/QuestionForm/Explanation/ExplanationContent';
 import AnswerContent from '../../components/QuestionForm/Answer/AnswerContent';
 import TagContent from '../../components/QuestionForm/Tags/TagContent';
-import SetupContent from '../../components/QuestionForm/Setup/SetupContent';
+
 
 import { 
   Container,
@@ -14,9 +18,11 @@ import {
   Button,
   Label,
   QuestionContent,
+  SetupContent
   } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
+// import { db } from '../../firebase/config';
 
 const QuestionForm = () => {
   
@@ -25,9 +31,11 @@ const QuestionForm = () => {
     difficulty: '',
     type: '',
     level: '',
+    // correct_answer: '',
     question: '',
     explanations: [],
     answers: [],
+    // themes: [],
     tags: [],
     // createdAt: firebase.firestore.Timestamp;
   };
@@ -35,15 +43,27 @@ const QuestionForm = () => {
   const [queryAdd, setQueryAdd] = useState(initialQuery);
   const [inputAnswer, setInputAnswer] = useState('');
   const [inputExplanation, setInputExplanation] = useState<string>('');
+  const [theme, setTheme] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<IAnswer[]>([]);
+  const [themes, setThemes] = useState<string[]>([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  
   
   const [tagInput, setTagInput] = useState('');
-    
+  const [addTagOpen, setAddTagOpen] = useState(false);
+
+  
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
-  // const [modalSearchTag, setModalSearchTag] = useState('');
+  const [modalSearchTag, setModalSearchTag] = useState('');
   const [dbTagChange, setDbTagChange] = useState(false);
+
+  const [questionLevel, setQuestionLevel] = useState(['1', '2', '3', '4', '5']);
+  const [questionType, setQuestionType] = useState(['Multiple', 'Boolean']);
+  const [questionDifficulty, setQuestionDifficulty] = useState(['Easy', 'Medium', 'Hard']);
+  const [questionCategory, setQuestionCategory] = useState(['Quiz', 'Test', 'Exam', 'Homework', 'Assignment', 'Project', 'Other']);
+
 
   function addAnswer(): void {
     const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
@@ -74,6 +94,12 @@ const QuestionForm = () => {
     // });
     setTagInput('');
   }
+
+  // function addTheme(): void {
+  //   setThemes([...themes, theme]);
+  //   addThemeToDB({theme});
+  //   setTheme('');
+  // }
 
   function validateInputs() {
     // if (queryAdd.category === '') {
@@ -152,7 +178,7 @@ const QuestionForm = () => {
     setQueryAdd(initialQuery);
     setAnswers([]);
     setQuestionTags([]);
-    // setThemes([]);
+    setThemes([]);
   }
 
   const handleSubmit = () => {
@@ -199,6 +225,19 @@ const QuestionForm = () => {
     setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputExplanation]});
     setInputExplanation('');
   }
+
+
+  const removeTheme = (index: number) => {
+    const newTheme = [...themes];
+    newTheme.splice(index, 1);
+    setThemes(newTheme);
+  }
+
+
+  const handleSearchTag = (e: any) => {
+    setModalSearchTag(e.target.value);
+    dbTags.filter((tag) => tag.includes(modalSearchTag));
+  }
   
   const removeExplanation = (index: number) => {
     const newExplanation = [...queryAdd.explanations];
@@ -223,10 +262,34 @@ const QuestionForm = () => {
             name="question"
             value={queryAdd.question}
             onChange={handleQueryAddInput}
-          />
+            />
+            {/* <Input
+              type="text"
+              name="question"
+              value={queryAdd.question}
+              onChange={handleQueryAddInput}
+            /> */}
         </QuestionContent>
 
-        <SetupContent onChange={handleSelectInput}/>
+
+        <SetupContent>
+          <Label htmlFor='category'>
+            Category:
+            <Select name="category" options={questionCategory} onChange={handleSelectInput}/>
+          </Label>
+          <Label htmlFor='difficulty'>
+            Difficulty:
+            <Select name="difficulty" options={questionDifficulty} onChange={handleSelectInput}/>
+          </Label>
+          <Label htmlFor='type'>
+            Type:
+            <Select name="type" options={questionType} onChange={handleSelectInput}/>
+          </Label>
+          <Label htmlFor='level'>
+            Level:
+            <Select name="level" options={questionLevel} onChange={handleSelectInput}/>
+          </Label>
+        </SetupContent>
 
 
         <AnswerContent
@@ -252,6 +315,8 @@ const QuestionForm = () => {
           questionTags={questionTags}
           removeTag={removeTag}
           dbTags={dbTags}
+          // modalSearchTag={modalSearchTag}
+          // handleSearchTag={handleSearchTag}
           tagInput={tagInput}
           setRemoveTagFromDB={setRemoveTagFromDB}
           setDbTags={setDbTags}

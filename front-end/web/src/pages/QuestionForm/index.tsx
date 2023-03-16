@@ -5,6 +5,7 @@ import { addThemeToDB, getThemesFromDB } from '../../firebase/themes';
 import Select from '../../components/Bricks/Select';
 import AddButton from '../../components/Bricks/Buttons/AddButton';
 import CloseButton from '../../components/Bricks/Buttons/CloseButton';
+import GenericControledTextarea from '../../components/Bricks/GenericControledTextarea';
 import Modal from "react-modal";
 import { HiTrash } from 'react-icons/hi';
 import ExplanationContent from '../../components/QuestionForm/Explanation/ExplanationContent';
@@ -21,13 +22,8 @@ import {
   Input,
   Button,
   Label,
-  TagContainer,
-  TagWrapper,
-  BoxTags,
-  BoxSetup,
-  BoxAdd,
-  TagLeft,
-  TagRight,
+  QuestionContent,
+  SetupContent
   } from './styles';
 
 import { IQuestionQuery, IAnswer } from '../../interfaces';
@@ -76,16 +72,6 @@ const QuestionForm = () => {
   const [questionDifficulty, setQuestionDifficulty] = useState(['Easy', 'Medium', 'Hard']);
   const [questionCategory, setQuestionCategory] = useState(['Quiz', 'Test', 'Exam', 'Homework', 'Assignment', 'Project', 'Other']);
 
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  }
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    // setModalModeUpdate(false)
-    // setTask(schedule);
-  }
 
   function addAnswer(): void {
     const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
@@ -188,7 +174,9 @@ const QuestionForm = () => {
 
 
   const handleQueryAddInput = ({target} : any) => {
+
     const { value, name } = target;
+    // console.log('handleQueryAddInput', name, value);
     // if (name === 'title') {
     //   setTask({...task, title: value });
     // }
@@ -209,7 +197,6 @@ const QuestionForm = () => {
   }
 
   const handleSubmit = () => {
-    // console.log('handleSubmit');
     if (validateInputs()) {
       addQuestion(queryAdd);
       setDefault();
@@ -281,17 +268,26 @@ const QuestionForm = () => {
       <Form
         // onSubmit={handleSubmit}
       >
-        <Label htmlFor='question'>
-          Question:
-          <Input
-            type="text"
+        <QuestionContent>
+
+          <Label htmlFor='question'>
+            Question:
+          </Label>
+          <GenericControledTextarea
             name="question"
             value={queryAdd.question}
             onChange={handleQueryAddInput}
-          />
-        </Label>
+            />
+            {/* <Input
+              type="text"
+              name="question"
+              value={queryAdd.question}
+              onChange={handleQueryAddInput}
+            /> */}
+        </QuestionContent>
 
-        <BoxSetup>
+
+        <SetupContent>
           <Label htmlFor='category'>
             Category:
             <Select name="category" options={questionCategory} onChange={handleSelectInput}/>
@@ -308,7 +304,7 @@ const QuestionForm = () => {
             Level:
             <Select name="level" options={questionLevel} onChange={handleSelectInput}/>
           </Label>
-        </BoxSetup>
+        </SetupContent>
 
 
         <AnswerContent
@@ -343,260 +339,15 @@ const QuestionForm = () => {
           setTagInput={setTagInput}
           setAddTagToDB={setAddTagToDB}
         />
-
-
-        {/* <BoxTags>
-          <Label htmlFor='answers'>
-            Answers:
-            {
-              answers.map((answer, index) => (
-                <div key={index}>
-                  <p>{answer.answer}</p>
-                  {answer.correct && <p>Resposta correta</p>}
-                  <p onClick={() => removeAnswer(index)} >x</p>
-                </div>
-              ))
-            }
-          </Label>
-        </BoxTags> */}
-        {/* <BoxCards>
-          <Label htmlFor='explanations'>
-            Explanations:
-          </Label>
-            {
-              queryAdd.explanations.map((explanation, index) => (
-                <ListCard key={index}>
-                  <p>{explanation}</p>
-                  <div
-                    onClick={() => removeExplanation(index)}
-                  >
-                  <CiEdit 
-                    // size={20}
-                    style={{
-                      color:  "#5ac9d1",
-                      // backgroundColor : '#000000',
-                      // padding:  '30px'
-                    }}
-                  
-                  />                    
-                  </div>
-
-
-                  <div
-                    onClick={() => removeExplanation(index)}
-                  >
-                  <HiTrash 
-                    // size={20}
-                    style={{
-                      color:  "#d15a5a",
-                      // backgroundColor : '#000000',
-                      // padding:  '30px'
-                    }}
-                  
-                  />                    
-                  </div>
-                </ListCard>
-              ))
-            }
-        </BoxCards> */}
         
-        <BoxTags>
-          <Label htmlFor='questionTags'>
-            Tags:
-            <TagContainer>
-
-            
-          {
-            questionTags.map((tag, index) => (
-              <TagWrapper key={index}>
-                <TagLeft>{tag}</TagLeft>
-                <TagRight><p onClick={() => removeTag(index, tag)} >x</p></TagRight>
-              </TagWrapper>
-            ))
-          }
-          </TagContainer>
-          </Label>
-          {/* <Button
-              type="button"
-              onClick={() => addTagToQuestion()}
-            >
-              Add questionTags
-          </Button>         */}
-
-          <Button onClick={openModal}>add tags</Button>
-          <div>
-            <Modal
-              isOpen={modalIsOpen}
-              // closeTimeoutMS={10000}
-              onRequestClose={closeModal}
-              contentLabel="Add Answer"
-              overlayClassName="modal-overlay"
-              className="modal-content"
-            >
-              <CloseButton onClick={closeModal}/>
-              <h3>Click on tags to add them</h3>
-              <div>
-                
-                
-                <TagContainer>
-                  {dbTags?.map(({tag}, index) => (
-                    <TagWrapper key={index}>
-                      <TagLeft
-                        onClick={() => addTagToQuestion(tag)}  
-                      >{tag}</TagLeft>
-                      <TagRight
-                        onClick={() => setRemoveTagFromDB(index)}
-                      >
-                        {/* <p>x</p> */}
-                        <HiTrash 
-                          // size={20}
-                          style={{
-                            color:  "#d15a5a",
-                          }}
-                        
-                        />
-                      </TagRight>
-                    </TagWrapper>
-                  ))}
-                </TagContainer>
-                <div>
-                  <AddButton onClick={() => setAddTagOpen(!addTagOpen)}
-                    text={addTagOpen ? "Cancel" : "Add Tag"}
-                   />
-                  {addTagOpen &&
-                    <div>
-                      <Label htmlFor='tagsInput'>
-                        Tag:
-                      <Input
-                        type="text"
-                        name="tagsInput"
-                        value={tagInput}
-                        onChange={(e) => setTagInput(e.target.value)}
-                      />
-                      </Label>
-                      <AddButton 
-                        onClick={setAddTagToDB}
-                        text="Add"
-                        disabled={tagInput.length === 0}
-                      />
-                    </div>
-                  }
-                  
-                </div>
-
-              </div>              
-            </Modal>
-          </div>
-
-
-        </BoxTags>
-        
-          {/* <GenericModal></GenericModal> */}
-
         <Button
           type="button"
           onClick={handleSubmit}
         >
-          Adicionar Questão
+          Add Question
         </Button>        
 
       </Form>
-
-      {/* <BoxAdd>
-        <Label htmlFor='explanations'>
-          Explanation:
-        <Input
-          type="text"
-          name="explanation"
-          value={inputExplanation}
-          onChange={(e) => setInputExplanation(e.target.value)}
-          />
-        </Label>
-        <Button
-            type="button"
-            onClick={() => addExplanation()}
-          >
-            Adicionar Explicação
-        </Button>   
-      </BoxAdd> */}
-
-      {/* <BoxAdd>
-        <Label htmlFor='answers'>
-          Answers:
-        <Input
-          type="text"
-          name="answers"
-          value={inputAnswer}
-          onChange={(e) => setInputAnswer(e.target.value)}
-          />
-        </Label>
-        
-        <div>
-          <Label htmlFor="isCorrect" >
-            Resposta correta
-            <Input
-              type="checkbox"
-              name="isCorrect"
-              onChange={ () => setIsCorrect(!isCorrect) }
-              checked={ isCorrect }
-            />
-          </Label>
-        </div>        
-
-        <Button
-            type="button"
-            onClick={() => addAnswer()}
-          >
-            Adicionar Resposta
-        </Button>        
-      </BoxAdd> */}
-      <BoxAdd>
-      <h3>Tags</h3>
-        <div>
-          <Label htmlFor='tagsInput'>
-            Tag:
-          <Input
-            type="text"
-            name="tagsInput"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            />
-          </Label>
-
-          <Button
-              type="button"
-              onClick={() => setAddTagToDB()}
-            >
-              Adicionar Tag ao banco de dados
-          </Button>
-          <TagContainer>
-            {dbTags?.map(({tag}, index) => (
-              <TagWrapper key={index}>
-                <TagLeft
-                  onClick={() => addTagToQuestion(tag)}  
-                >{tag}</TagLeft>
-                <TagRight
-                  onClick={() => setRemoveTagFromDB(index)}
-                >
-                  {/* <p>x</p> */}
-                  <HiTrash 
-                    // size={20}
-                    style={{
-                      color:  "#d15a5a",
-                      // backgroundColor : '#000000',
-                      // padding:  '30px'
-                    }}
-                  
-                  />
-                </TagRight>
-                {/* <div>E</div> */}
-                {/* <p onClick={() => removeTag(index)} >x</p> */}
-              </TagWrapper>
-            ))}
-          </TagContainer>
-        </div>     
-      </BoxAdd>
-      
     </Container>
   );
 }

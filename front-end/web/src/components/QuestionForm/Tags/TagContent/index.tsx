@@ -4,28 +4,22 @@ import EditButton from '../../../Bricks/Buttons/EditButton';
 import CancelButton from '../../../Bricks/Buttons/CancelButton';
 import AddButton from '../../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../../Bricks/Buttons/GenericButton';
+import TagList from '../TagList';
 // import { GiCheckMark } from 'react-icons/gi';
 // import AddInputArea from '../../GenericAddInputArea';
 // import AnswerAddInputArea from '../TagAddInputArea';
 // import AnswerCard from '../TagCard';
 import { HiTrash } from 'react-icons/hi';
 
-import Modal from "react-modal";
+// import Modal from "react-modal";
 
 import { Container, CardContent, CollapsedContent, ControllerPanel,
   TagWrapper, TagLeft, TagRight
 } from './styles';
 
-Modal.setAppElement('#root');
+// Modal.setAppElement('#root');
 
 interface Props {
-  // listAnswers: object[];
-  // inputAnswer: string;
-  // setInputAnswer: (e: string) => void;
-  // addAnswer: () => void;
-  // removeAnswer: (index: number) => void;
-  // setIsCorrect: (e: boolean) => void;
-  // isCorrect: boolean;
   questionTags: string[];
   removeTag: (index: number, tag: string) => void;
   addTagToQuestion: (tag: string) => void;
@@ -60,15 +54,15 @@ const TagContent: React.FC<Props> = ({
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  }
+  // const openModal = () => {
+  //   setModalIsOpen(true);
+  // }
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-    // setModalModeUpdate(false)
-    // setTask(schedule);
-  }
+  // const closeModal = () => {
+  //   setModalIsOpen(false);
+  //   // setModalModeUpdate(false)
+  //   // setTask(schedule);
+  // }
 
 
   const cancelOnClickHandler = () => {
@@ -107,7 +101,6 @@ const TagContent: React.FC<Props> = ({
                       onClick={() => setRemoveTagFromDB(index)}
                     >
                       <HiTrash 
-                        
                         style={{
                           color:  "#d15a5a",
                         }}
@@ -135,7 +128,7 @@ const TagContent: React.FC<Props> = ({
         }
 
 
-          <div>
+          {/* <div>
             <Modal
               isOpen={modalIsOpen}
               // closeTimeoutMS={10000}
@@ -194,19 +187,17 @@ const TagContent: React.FC<Props> = ({
                 <p>crate new tag</p>
               </div>              
             </Modal>
-          </div>
+          </div> */}
 
 
 
-
-
-      {questionTags.map((tag, index) => (
+      <TagList questionTags={questionTags} removeTag={removeTag} />
+      {/* {questionTags.map((tag, index) => (
       <TagWrapper key={index}>
         <TagLeft>{tag}</TagLeft>
         <TagRight><p onClick={() => removeTag(index, tag)} >x</p></TagRight>
       </TagWrapper>
-      ))}
-
+      ))} */}
     </Container>
   );
 };

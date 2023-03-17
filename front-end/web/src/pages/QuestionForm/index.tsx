@@ -16,7 +16,7 @@ import {
   QuestionContent,
   } from './styles';
 
-import { IQuestionQuery, IAnswer } from '../../interfaces';
+import { IQuestionQuery } from '../../interfaces';
 
 const QuestionForm = () => {
   
@@ -33,10 +33,7 @@ const QuestionForm = () => {
   };
 
   const [queryAdd, setQueryAdd] = useState(initialQuery);
-  const [inputAnswer, setInputAnswer] = useState('');
-  const [inputExplanation, setInputExplanation] = useState<string>('');
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
-  const [answers, setAnswers] = useState<IAnswer[]>([]);
+  // const [inputExplanation, setInputExplanation] = useState<string>('');
   
   const [tagInput, setTagInput] = useState('');
     
@@ -47,16 +44,11 @@ const QuestionForm = () => {
 
   const [questionAdded, setQuestionAdded] = useState(false);
 
-  function addAnswer(): void {
-    const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
-    setAnswers([...answers, newAnswer]);    
-    setInputAnswer('');
-  }
 
-  function addTagToQuestion(tagToAdd: string): void {
-    setQuestionTags([...questionTags, tagToAdd]);
-    setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
-  }
+  // function addTagToQuestion(tagToAdd: string): void {
+  //   setQuestionTags([...questionTags, tagToAdd]);
+  //   setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
+  // }
 
   function setAddTagToDB(): void {
     if(tagInput === '') return;
@@ -78,10 +70,7 @@ const QuestionForm = () => {
   }
 
   function validateInputs() {
-    // if (queryAdd.category === '') {
-    //   alert('Please enter an category');
-    //   return false;
-    // }
+
     if (queryAdd.question === '') {
       alert('Please enter an question');
       return false;
@@ -105,13 +94,6 @@ const QuestionForm = () => {
     setQueryAdd(query);
   }
 
-  useEffect(() => {
-    updateQuery({
-      ...queryAdd,
-      answers: answers.map((ans) => ans),
-      // answers: answers.map((ans) => ans.answer),
-    });
-  }, [answers]);
 
   useEffect(() => {
     updateQuery({
@@ -129,6 +111,9 @@ const QuestionForm = () => {
     });
   }, []); 
 
+  /*
+  quando adiciona uma tag aod db, recarrega as tags do db
+  */
   useEffect(() => {
     getTagsFromDB().then((tags) => {
       // Remover os tags que foram adicionados a questão
@@ -156,7 +141,7 @@ const QuestionForm = () => {
 
   const setDefault = () => {
     setQueryAdd(initialQuery);
-    setAnswers([]);
+    // setAnswers([]);
     setQuestionTags([]);
     // setThemes([]);
   }
@@ -166,12 +151,6 @@ const QuestionForm = () => {
       addQuestion(queryAdd);
       setDefault();
     }
-  }
-
-  const removeAnswer = (index: number) => {
-    const newAnswers = [...answers];
-    newAnswers.splice(index, 1);
-    setAnswers(newAnswers);
   }
   
   const removeTag = (index: number, tag: string) => {
@@ -199,19 +178,6 @@ const QuestionForm = () => {
       setDbTags(newTags);
     }
   }
-
-  const addExplanation = () => {
-    if(inputExplanation === '') return;
-    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputExplanation]});
-    setInputExplanation('');
-  }
-  
-  const removeExplanation = (index: number) => {
-    const newExplanation = [...queryAdd.explanations];
-    newExplanation.splice(index, 1);
-    setQueryAdd({...queryAdd, explanations: newExplanation});
-  }
-
 
   return (
     
@@ -241,17 +207,21 @@ const QuestionForm = () => {
         />
 
         <ExplanationContent
-          onClick={removeExplanation}
-          list={queryAdd.explanations} 
-          addExplanation={addExplanation}
-          setInputExplanation={setInputExplanation}
-          inputExplanation={inputExplanation}
+          updateQuery={updateQuery}
+          queryAdd={queryAdd}
+          questionAdded={questionAdded}
         />
+
         <TagContent 
-          addTagToQuestion={addTagToQuestion}
+          updateQuery={updateQuery}
+          queryAdd={queryAdd}
+          questionAdded={questionAdded}
+
+
+          // addTagToQuestion={addTagToQuestion}
+          // dbTags={dbTags}
           questionTags={questionTags}
           removeTag={removeTag}
-          dbTags={dbTags}
           tagInput={tagInput}
           setRemoveTagFromDB={setRemoveTagFromDB}
           setDbTags={setDbTags}

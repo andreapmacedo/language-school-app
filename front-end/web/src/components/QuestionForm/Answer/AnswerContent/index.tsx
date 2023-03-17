@@ -25,8 +25,8 @@ const AnswerContent: React.FC<Props> = ({
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<IAnswer[]>([]);
 
+  // neste contexto esta validação está sendo feita no pai
   // function validateInputs() {
-    
   //   if (answers.length < 2) {
   //     alert('Please enter at least two answers');
   //     return false;
@@ -51,9 +51,8 @@ const AnswerContent: React.FC<Props> = ({
     setAnswers(newAnswers);
   }
 
-  // const setDefault = () => {
+  // neste contexto, o código abaixo foi substituído pelo useEffect abaixo uma vez que o gatilho está no pai.
   //   setAnswers([]);
-  // }
 
   useEffect(() => {
     setAnswers([]);
@@ -76,6 +75,7 @@ const AnswerContent: React.FC<Props> = ({
   const addOnClickHandler = () => {
     addAnswer();
     setIsCollapsed(!isCollapsed);
+    setIsCorrect(false);
   }
 
   return (

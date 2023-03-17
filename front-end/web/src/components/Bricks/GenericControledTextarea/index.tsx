@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from './styles';
 
 interface Props {
-  onChange: () => void;
+  onChange: (onChange: any) => void;
   value: string;
   name: string;
 }

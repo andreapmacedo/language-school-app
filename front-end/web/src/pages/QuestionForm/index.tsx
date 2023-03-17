@@ -21,14 +21,14 @@ import { IQuestionQuery, IAnswer } from '../../interfaces';
 const QuestionForm = () => {
   
   const initialQuery: IQuestionQuery = {
+    question: '',
+    answers: [],
+    explanations: [],
+    tags: [],
     category: '',
     difficulty: '',
     type: '',
     level: '',
-    question: '',
-    explanations: [],
-    answers: [],
-    tags: [],
     // createdAt: firebase.firestore.Timestamp;
   };
 
@@ -228,7 +228,6 @@ const QuestionForm = () => {
 
         <SetupContent onChange={handleSelectInput}/>
 
-
         <AnswerContent
           inputAnswer={inputAnswer}
           setInputAnswer={setInputAnswer}
@@ -238,7 +237,6 @@ const QuestionForm = () => {
           setIsCorrect={setIsCorrect}
           isCorrect={isCorrect}
         />
-
 
         <ExplanationContent
           onClick={removeExplanation}

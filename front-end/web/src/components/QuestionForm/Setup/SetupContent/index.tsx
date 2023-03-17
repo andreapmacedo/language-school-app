@@ -2,7 +2,7 @@ import { Container, Label} from './styles';
 import Select from '../../../Bricks/Select';
 
 interface Props {
-  onChange: () => void;
+  onChange: (selectedItem: any) => void;
 }
 
 const SetupContent: React.FC<Props> = ({

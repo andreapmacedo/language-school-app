@@ -47,7 +47,7 @@ export const Select = styled.select`
   border: 1px solid #000;
 `;
 
-export const SetupContentt = styled.div`
+export const SetupContent = styled.div`
   /* margin: 10px; */
   padding: 10px;
   border: 1px solid #000;

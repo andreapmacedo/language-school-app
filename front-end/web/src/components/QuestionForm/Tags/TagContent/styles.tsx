@@ -46,7 +46,7 @@ export const CardContent = styled.div`
 
 export const CollapsedContent = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   background-color: #fff;
   border: 1px solid #b4efed;
   border-radius: 3px;

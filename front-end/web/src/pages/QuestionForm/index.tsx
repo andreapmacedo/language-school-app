@@ -29,14 +29,9 @@ const QuestionForm = () => {
     difficulty: '',
     type: '',
     level: '',
-    // createdAt: firebase.firestore.Timestamp;
   };
 
-  const [queryAdd, setQueryAdd] = useState(initialQuery);
-  // const [inputExplanation, setInputExplanation] = useState<string>('');
-  
-  const [tagInput, setTagInput] = useState('');
-    
+  const [queryAdd, setQueryAdd] = useState(initialQuery); 
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
   
@@ -50,24 +45,24 @@ const QuestionForm = () => {
   //   setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
   // }
 
-  function setAddTagToDB(): void {
-    if(tagInput === '') return;
-    if(dbTags.find(({tag}) => tag === tagInput)) {
-      alert('Tag already exists');
-      return;
-    }
-    if(questionTags.find((qt) => qt === tagInput)) {
-      alert('Tag already exists in question');
-      return;
-    }
-    addTagToDB({tag: tagInput});    
-    setDbTagChange(!dbTagChange);
+  // function setAddTagToDB(): void {
+  //   if(tagInput === '') return;
+  //   if(dbTags.find(({tag}) => tag === tagInput)) {
+  //     alert('Tag already exists');
+  //     return;
+  //   }
+  //   if(questionTags.find((qt) => qt === tagInput)) {
+  //     alert('Tag already exists in question');
+  //     return;
+  //   }
+  //   addTagToDB({tag: tagInput});    
+  //   setDbTagChange(!dbTagChange);
     
-    // getTagsFromDB().then((tags) => {
-    //   setDbTags(tags);
-    // });
-    setTagInput('');
-  }
+  //   // getTagsFromDB().then((tags) => {
+  //   //   setDbTags(tags);
+  //   // });
+  //   setTagInput('');
+  // }
 
   function validateInputs() {
 
@@ -95,21 +90,21 @@ const QuestionForm = () => {
   }
 
 
-  useEffect(() => {
-    updateQuery({
-      ...queryAdd,
-      tags: questionTags.map((tag) => tag)
-    });
-  }, [questionTags]);
+  // useEffect(() => {
+  //   updateQuery({
+  //     ...queryAdd,
+  //     tags: questionTags.map((tag) => tag)
+  //   });
+  // }, [questionTags]);
 
   /**
    * Get tags from DB when component is mounted
    */
-  useEffect(() => {
-    getTagsFromDB().then((tags) => {
-      setDbTags(tags);
-    });
-  }, []); 
+  // useEffect(() => {
+  //   getTagsFromDB().then((tags) => {
+  //     setDbTags(tags);
+  //   });
+  // }, []); 
 
   /*
   quando adiciona uma tag aod db, recarrega as tags do db
@@ -141,9 +136,6 @@ const QuestionForm = () => {
 
   const setDefault = () => {
     setQueryAdd(initialQuery);
-    // setAnswers([]);
-    setQuestionTags([]);
-    // setThemes([]);
   }
 
   const handleSubmit = () => {
@@ -153,31 +145,31 @@ const QuestionForm = () => {
     }
   }
   
-  const removeTag = (index: number, tag: string) => {
-    // console.log('removeTag', index, tag);
-    // console.log('dbTags', dbTags);
+  // const removeTag = (index: number, tag: string) => {
+  //   // console.log('removeTag', index, tag);
+  //   // console.log('dbTags', dbTags);
     
     
-    // alerta com confirmação
-    // if (window.confirm('Are you sure you wish to delete this item?')) {
-      const newTags = [...questionTags];
-      newTags.splice(index, 1);
-      setQuestionTags(newTags);
-      setDbTags([...dbTags, {tag}]);
-    // }
-  }
+  //   // alerta com confirmação
+  //   // if (window.confirm('Are you sure you wish to delete this item?')) {
+  //     const newTags = [...questionTags];
+  //     newTags.splice(index, 1);
+  //     setQuestionTags(newTags);
+  //     setDbTags([...dbTags, {tag}]);
+  //   // }
+  // }
 
-  const setRemoveTagFromDB = (index: number) => {
-    // alerta com confirmação
-    if (window.confirm('Are you sure you wish to delete this item?')) {
+  // const setRemoveTagFromDB = (index: number) => {
+  //   // alerta com confirmação
+  //   if (window.confirm('Are you sure you wish to delete this item?')) {
       
-      const { id } = dbTags[index];
-      removeTagFromDB(id);
-      const newTags = [...dbTags];
-      newTags.splice(index, 1);
-      setDbTags(newTags);
-    }
-  }
+  //     const { id } = dbTags[index];
+  //     removeTagFromDB(id);
+  //     const newTags = [...dbTags];
+  //     newTags.splice(index, 1);
+  //     setDbTags(newTags);
+  //   }
+  // }
 
   return (
     
@@ -187,7 +179,6 @@ const QuestionForm = () => {
         // onSubmit={handleSubmit}
       >
         <QuestionContent>
-
           <Label htmlFor='question'>
             Question:
           </Label>
@@ -198,7 +189,9 @@ const QuestionForm = () => {
           />
         </QuestionContent>
 
-        <SetupContent onChange={handleSelectInput}/>
+        <SetupContent
+          onChange={handleSelectInput}
+        />
 
         <AnswerContent
           updateQuery={updateQuery}
@@ -216,18 +209,6 @@ const QuestionForm = () => {
           updateQuery={updateQuery}
           queryAdd={queryAdd}
           questionAdded={questionAdded}
-
-
-          // addTagToQuestion={addTagToQuestion}
-          // dbTags={dbTags}
-          questionTags={questionTags}
-          removeTag={removeTag}
-          tagInput={tagInput}
-          setRemoveTagFromDB={setRemoveTagFromDB}
-          setDbTags={setDbTags}
-          setDbTagChange={setDbTagChange}
-          setTagInput={setTagInput}
-          setAddTagToDB={setAddTagToDB}
         />
         
         <Button
@@ -236,7 +217,6 @@ const QuestionForm = () => {
         >
           Add Question
         </Button>        
-
       </Form>
     </Container>
   );

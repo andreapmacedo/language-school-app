@@ -22,32 +22,12 @@ interface Props {
   questionAdded: boolean;
   updateQuery: (query: any) => void;
   queryAdd: object;
-
-  
-  addTagOpen: boolean;
-  tagInput: string;
-
-  
-  setAddTagToDB: () => void;
-  setAddTagOpen: (e: boolean) => void;
-  setTagInput: (e: string) => void;
-
 }
 
 const TagContent: React.FC<Props> = ({
   questionAdded,
   updateQuery,
   queryAdd,
-  
-  
-  
-  setAddTagOpen,
-  setTagInput,
-  tagInput,
-  addTagOpen,
-  setAddTagToDB, 
-
-
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -65,6 +45,9 @@ useEffect(() => {
   });
 }, []); 
 
+useEffect(() => {
+  setQuestionTags([]);
+}, [questionAdded]);
 
 useEffect(() => {
   updateQuery({
@@ -106,8 +89,6 @@ useEffect(() => {
   const removeQuestionTag = (index: number, tag: string) => {
     // console.log('removeQuestionTag', index, tag);
     // console.log('dbTags', dbTags);
-    
-    
     // alerta com confirmação
     // if (window.confirm('Are you sure you wish to delete this item?')) {
       const newTags = [...questionTags];
@@ -130,18 +111,25 @@ useEffect(() => {
 
   return (
     <Container>
-      {!isCollapsed &&
+      
         <AddButton 
           onClick={() => setIsCollapsed(!isCollapsed)}
           // onClick={openModal}
           text='Add Tags'
           color='#eee'
         />
-      }
+      
+      {/* {!isCollapsed &&
+        <AddButton 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          // onClick={openModal}
+          text='Add Tags'
+          color='#eee'
+        />
+      } */}
 
         {isCollapsed &&
           <CollapsedContent>
-
             {dbTags?.map(({tag}, index) => (
               <TagWrapper key={index}>
                 <TagLeft

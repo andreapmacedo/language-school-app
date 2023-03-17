@@ -42,8 +42,10 @@ const QuestionForm = () => {
     
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
-  // const [modalSearchTag, setModalSearchTag] = useState('');
+  
   const [dbTagChange, setDbTagChange] = useState(false);
+
+  const [questionAdded, setQuestionAdded] = useState(false);
 
   function addAnswer(): void {
     const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
@@ -84,14 +86,18 @@ const QuestionForm = () => {
       alert('Please enter an question');
       return false;
     }
-    if (answers.length < 2) {
-      alert('Please enter at least two answers');
-      return false;
-    }
-    if (answers.filter((ans) => ans.correct).length === 0 ) {      
+    if (queryAdd.answers.filter((ans) => ans.correct).length === 0 ) {      
       alert('Please enter the correct answer');
       return false;
     }
+    if (queryAdd.answers.length < 2) {
+      alert('Please enter at least two answers');
+      return false;
+    }
+    /*
+    * usar para manipular dentro dos componentes filhos um useEffect para resetar o estado
+    */
+    setQuestionAdded(!questionAdded);
     return true;
   }
 
@@ -229,13 +235,9 @@ const QuestionForm = () => {
         <SetupContent onChange={handleSelectInput}/>
 
         <AnswerContent
-          inputAnswer={inputAnswer}
-          setInputAnswer={setInputAnswer}
-          listAnswers={answers}
-          addAnswer={addAnswer}
-          removeAnswer={removeAnswer}
-          setIsCorrect={setIsCorrect}
-          isCorrect={isCorrect}
+          updateQuery={updateQuery}
+          queryAdd={queryAdd}
+          questionAdded={questionAdded}
         />
 
         <ExplanationContent

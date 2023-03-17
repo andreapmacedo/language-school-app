@@ -34,8 +34,8 @@ const AnswerAddInputArea: React.FC<Props> = ({
         <input
           type="checkbox"
           name="isCorrect"
-          onChange={ () => setIsCorrect(!isCorrect) }
-          // checked={ !isCorrect }
+          onChange={ (e) => setIsCorrect(e.target.checked) }
+          checked={ isCorrect }
         />
       </label>
     </Container>

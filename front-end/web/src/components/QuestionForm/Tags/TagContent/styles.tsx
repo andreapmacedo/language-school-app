@@ -12,6 +12,15 @@ export const Container = styled.div`
   }
 `;
 
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 100%; */
+  /* border-radius: 3px; */
+  /* background-color: #2f2b3df5; */
+  /* background-color: #2fd; */
+`;
+
 export const CardContent = styled.div`
   display: flex;
   /* flex-direction: column; */
@@ -47,6 +56,7 @@ export const CardContent = styled.div`
 export const CollapsedContent = styled.div`
   display: flex;
   flex-direction: column;
+  /* flex-wrap: wrap; */
   background-color: #fff;
   border: 1px solid #b4efed;
   border-radius: 3px;
@@ -64,14 +74,10 @@ export const ControllerPanel = styled.div`
   margin: 8px 0;
 `;
 
-
-
 export const TagWrapper = styled.div`
-  
   display: flex;
   margin: 8px;
   /* align-items: center; */
-
 `;
 
 export const TagLeft = styled.div`

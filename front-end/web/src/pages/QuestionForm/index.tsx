@@ -16,7 +16,7 @@ import {
   QuestionContent,
   } from './styles';
 
-import { IQuestionQuery, IAnswer } from '../../interfaces';
+import { IQuestionQuery } from '../../interfaces';
 
 const QuestionForm = () => {
   
@@ -29,69 +29,59 @@ const QuestionForm = () => {
     difficulty: '',
     type: '',
     level: '',
-    // createdAt: firebase.firestore.Timestamp;
   };
 
-  const [queryAdd, setQueryAdd] = useState(initialQuery);
-  const [inputAnswer, setInputAnswer] = useState('');
-  const [inputExplanation, setInputExplanation] = useState<string>('');
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
-  const [answers, setAnswers] = useState<IAnswer[]>([]);
-  
-  const [tagInput, setTagInput] = useState('');
-    
+  const [queryAdd, setQueryAdd] = useState(initialQuery); 
   const [questionTags, setQuestionTags] = useState<string[]>([]);
   const [dbTags, setDbTags] = useState([]);
-  // const [modalSearchTag, setModalSearchTag] = useState('');
+  
   const [dbTagChange, setDbTagChange] = useState(false);
 
-  function addAnswer(): void {
-    const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
-    setAnswers([...answers, newAnswer]);    
-    setInputAnswer('');
-  }
+  const [questionAdded, setQuestionAdded] = useState(false);
 
-  function addTagToQuestion(tagToAdd: string): void {
-    setQuestionTags([...questionTags, tagToAdd]);
-    setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
-  }
 
-  function setAddTagToDB(): void {
-    if(tagInput === '') return;
-    if(dbTags.find(({tag}) => tag === tagInput)) {
-      alert('Tag already exists');
-      return;
-    }
-    if(questionTags.find((qt) => qt === tagInput)) {
-      alert('Tag already exists in question');
-      return;
-    }
-    addTagToDB({tag: tagInput});    
-    setDbTagChange(!dbTagChange);
+  // function addTagToQuestion(tagToAdd: string): void {
+  //   setQuestionTags([...questionTags, tagToAdd]);
+  //   setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
+  // }
+
+  // function setAddTagToDB(): void {
+  //   if(tagInput === '') return;
+  //   if(dbTags.find(({tag}) => tag === tagInput)) {
+  //     alert('Tag already exists');
+  //     return;
+  //   }
+  //   if(questionTags.find((qt) => qt === tagInput)) {
+  //     alert('Tag already exists in question');
+  //     return;
+  //   }
+  //   addTagToDB({tag: tagInput});    
+  //   setDbTagChange(!dbTagChange);
     
-    // getTagsFromDB().then((tags) => {
-    //   setDbTags(tags);
-    // });
-    setTagInput('');
-  }
+  //   // getTagsFromDB().then((tags) => {
+  //   //   setDbTags(tags);
+  //   // });
+  //   setTagInput('');
+  // }
 
   function validateInputs() {
-    // if (queryAdd.category === '') {
-    //   alert('Please enter an category');
-    //   return false;
-    // }
+
     if (queryAdd.question === '') {
       alert('Please enter an question');
       return false;
     }
-    if (answers.length < 2) {
-      alert('Please enter at least two answers');
-      return false;
-    }
-    if (answers.filter((ans) => ans.correct).length === 0 ) {      
+    if (queryAdd.answers.filter((ans) => ans.correct).length === 0 ) {      
       alert('Please enter the correct answer');
       return false;
     }
+    if (queryAdd.answers.length < 2) {
+      alert('Please enter at least two answers');
+      return false;
+    }
+    /*
+    * usar para manipular dentro dos componentes filhos um useEffect para resetar o estado
+    */
+    setQuestionAdded(!questionAdded);
     return true;
   }
 
@@ -99,30 +89,26 @@ const QuestionForm = () => {
     setQueryAdd(query);
   }
 
-  useEffect(() => {
-    updateQuery({
-      ...queryAdd,
-      answers: answers.map((ans) => ans),
-      // answers: answers.map((ans) => ans.answer),
-    });
-  }, [answers]);
 
-  useEffect(() => {
-    updateQuery({
-      ...queryAdd,
-      tags: questionTags.map((tag) => tag)
-    });
-  }, [questionTags]);
+  // useEffect(() => {
+  //   updateQuery({
+  //     ...queryAdd,
+  //     tags: questionTags.map((tag) => tag)
+  //   });
+  // }, [questionTags]);
 
   /**
    * Get tags from DB when component is mounted
    */
-  useEffect(() => {
-    getTagsFromDB().then((tags) => {
-      setDbTags(tags);
-    });
-  }, []); 
+  // useEffect(() => {
+  //   getTagsFromDB().then((tags) => {
+  //     setDbTags(tags);
+  //   });
+  // }, []); 
 
+  /*
+  quando adiciona uma tag aod db, recarrega as tags do db
+  */
   useEffect(() => {
     getTagsFromDB().then((tags) => {
       // Remover os tags que foram adicionados a questão
@@ -150,9 +136,6 @@ const QuestionForm = () => {
 
   const setDefault = () => {
     setQueryAdd(initialQuery);
-    setAnswers([]);
-    setQuestionTags([]);
-    // setThemes([]);
   }
 
   const handleSubmit = () => {
@@ -161,51 +144,32 @@ const QuestionForm = () => {
       setDefault();
     }
   }
-
-  const removeAnswer = (index: number) => {
-    const newAnswers = [...answers];
-    newAnswers.splice(index, 1);
-    setAnswers(newAnswers);
-  }
   
-  const removeTag = (index: number, tag: string) => {
-    // console.log('removeTag', index, tag);
-    // console.log('dbTags', dbTags);
+  // const removeTag = (index: number, tag: string) => {
+  //   // console.log('removeTag', index, tag);
+  //   // console.log('dbTags', dbTags);
     
     
-    // alerta com confirmação
-    // if (window.confirm('Are you sure you wish to delete this item?')) {
-      const newTags = [...questionTags];
-      newTags.splice(index, 1);
-      setQuestionTags(newTags);
-      setDbTags([...dbTags, {tag}]);
-    // }
-  }
+  //   // alerta com confirmação
+  //   // if (window.confirm('Are you sure you wish to delete this item?')) {
+  //     const newTags = [...questionTags];
+  //     newTags.splice(index, 1);
+  //     setQuestionTags(newTags);
+  //     setDbTags([...dbTags, {tag}]);
+  //   // }
+  // }
 
-  const setRemoveTagFromDB = (index: number) => {
-    // alerta com confirmação
-    if (window.confirm('Are you sure you wish to delete this item?')) {
+  // const setRemoveTagFromDB = (index: number) => {
+  //   // alerta com confirmação
+  //   if (window.confirm('Are you sure you wish to delete this item?')) {
       
-      const { id } = dbTags[index];
-      removeTagFromDB(id);
-      const newTags = [...dbTags];
-      newTags.splice(index, 1);
-      setDbTags(newTags);
-    }
-  }
-
-  const addExplanation = () => {
-    if(inputExplanation === '') return;
-    setQueryAdd({...queryAdd, explanations: [...queryAdd.explanations, inputExplanation]});
-    setInputExplanation('');
-  }
-  
-  const removeExplanation = (index: number) => {
-    const newExplanation = [...queryAdd.explanations];
-    newExplanation.splice(index, 1);
-    setQueryAdd({...queryAdd, explanations: newExplanation});
-  }
-
+  //     const { id } = dbTags[index];
+  //     removeTagFromDB(id);
+  //     const newTags = [...dbTags];
+  //     newTags.splice(index, 1);
+  //     setDbTags(newTags);
+  //   }
+  // }
 
   return (
     
@@ -215,7 +179,6 @@ const QuestionForm = () => {
         // onSubmit={handleSubmit}
       >
         <QuestionContent>
-
           <Label htmlFor='question'>
             Question:
           </Label>
@@ -226,36 +189,26 @@ const QuestionForm = () => {
           />
         </QuestionContent>
 
-        <SetupContent onChange={handleSelectInput}/>
+        <SetupContent
+          onChange={handleSelectInput}
+        />
 
         <AnswerContent
-          inputAnswer={inputAnswer}
-          setInputAnswer={setInputAnswer}
-          listAnswers={answers}
-          addAnswer={addAnswer}
-          removeAnswer={removeAnswer}
-          setIsCorrect={setIsCorrect}
-          isCorrect={isCorrect}
+          updateQuery={updateQuery}
+          queryAdd={queryAdd}
+          questionAdded={questionAdded}
         />
 
         <ExplanationContent
-          onClick={removeExplanation}
-          list={queryAdd.explanations} 
-          addExplanation={addExplanation}
-          setInputExplanation={setInputExplanation}
-          inputExplanation={inputExplanation}
+          updateQuery={updateQuery}
+          queryAdd={queryAdd}
+          questionAdded={questionAdded}
         />
+
         <TagContent 
-          addTagToQuestion={addTagToQuestion}
-          questionTags={questionTags}
-          removeTag={removeTag}
-          dbTags={dbTags}
-          tagInput={tagInput}
-          setRemoveTagFromDB={setRemoveTagFromDB}
-          setDbTags={setDbTags}
-          setDbTagChange={setDbTagChange}
-          setTagInput={setTagInput}
-          setAddTagToDB={setAddTagToDB}
+          updateQuery={updateQuery}
+          queryAdd={queryAdd}
+          questionAdded={questionAdded}
         />
         
         <Button
@@ -264,7 +217,6 @@ const QuestionForm = () => {
         >
           Add Question
         </Button>        
-
       </Form>
     </Container>
   );

@@ -1,36 +1,72 @@
-import React, {useState} from 'react';
-import { Container, CardContent, CollapsedContent, ControllerPanel } from './styles';
-import TrashButton from '../../../Bricks/Buttons/TrashButton';
-import EditButton from '../../../Bricks/Buttons/EditButton';
+import React, {useState, useEffect} from 'react';
+import { Container, CollapsedContent, ControllerPanel } from './styles';
 import CancelButton from '../../../Bricks/Buttons/CancelButton';
 import AddButton from '../../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
-import AddInputArea from '../../GenericAddInputArea';
 import AnswerAddInputArea from '../AnswerAddInputArea';
 import AnswerCard from '../AnswerCard';
+import CollapsedHeader from '../../../CollapsedHeader';
 
+import { IAnswer } from '../../../../interfaces';
 
 interface Props {
-  listAnswers: object[];
-  inputAnswer: string;
-  setInputAnswer: (e: string) => void;
-  addAnswer: () => void;
-  removeAnswer: (index: number) => void;
-  setIsCorrect: (e: boolean) => void;
-  isCorrect: boolean;
+  updateQuery: (query: any) => void;
+  queryAdd: object;
+  questionAdded: boolean;
 }
 
 const AnswerContent: React.FC<Props> = ({
-  listAnswers,
-  inputAnswer,
-  setInputAnswer,
-  addAnswer,
-  removeAnswer,
-  setIsCorrect,
-  isCorrect
+  updateQuery,
+  queryAdd,
+  questionAdded,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [inputAnswer, setInputAnswer] = useState('');
+  const [isCorrect, setIsCorrect] = useState<boolean>(false);
+  const [answers, setAnswers] = useState<IAnswer[]>([]);
+
+  // neste contexto esta validação está sendo feita no pai
+  // function validateInputs() {
+  //   if (answers.length < 2) {
+  //     alert('Please enter at least two answers');
+  //     return false;
+  //   }
+  //   if (answers.filter((ans) => ans.correct).length === 0 ) {      
+  //     alert('Please enter the correct answer');
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+
+  function addAnswer(): void {
+    const newAnswer: IAnswer = { answer: inputAnswer, correct: isCorrect };
+    setAnswers([...answers, newAnswer]);    
+    setInputAnswer('');
+  }
+
+  const removeAnswer = (index: number) => {
+    const newAnswers = [...answers];
+    newAnswers.splice(index, 1);
+    setAnswers(newAnswers);
+  }
+
+  // neste contexto, o código abaixo foi substituído pelo useEffect abaixo uma vez que o gatilho está no pai.
+  //   setAnswers([]);
+
+  useEffect(() => {
+    setAnswers([]);
+  }, [questionAdded]);
+
+
+  useEffect(() => {
+    updateQuery({
+      ...queryAdd,
+      answers: answers.map((ans) => ans),
+    });
+  }, [answers]);
+
 
   const cancelOnClickHandler = () => {
     setIsCollapsed(!isCollapsed)
@@ -40,17 +76,16 @@ const AnswerContent: React.FC<Props> = ({
   const addOnClickHandler = () => {
     addAnswer();
     setIsCollapsed(!isCollapsed);
+    setIsCorrect(false);
   }
 
   return (
     <Container>
-      {!isCollapsed &&
-        <AddButton 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          text='Add Answer'
-          color='#eee'
-        />
-      }
+      <CollapsedHeader
+        title='Add Answer'
+        setIsCollapsed={setIsCollapsed}
+        isCollapsed={isCollapsed}
+      />
         {isCollapsed &&
           <CollapsedContent>
             <AnswerAddInputArea
@@ -76,44 +111,16 @@ const AnswerContent: React.FC<Props> = ({
           
           </CollapsedContent>
         }
-      {
-        listAnswers?.map((answer, index) => (
-          // <CardContent key={index} >
-          //   <p>{answer}</p>
-          //   <div>
-          //     <EditButton 
-          //       onClick={() => removeAnswer(index)}
-          //     />
-          //     <TrashButton 
-          //       onClick={() => removeAnswer(index)}
-          //     />
-          //   </div>
-          // </CardContent>
-          
-            <AnswerCard
-              key={index}
-              index={index}
-              answer={answer}
-              removeAnswer={removeAnswer}
-            />
+      {        
+        answers?.map((answer, index) => (          
+          <AnswerCard
+            key={index}
+            index={index}
+            answer={answer}
+            removeAnswer={removeAnswer}
+          />
         ))
       }
-      {/* {
-        listAnswers?.map(({answer}, index) => (
-
-          <CardContent key={index} >
-            <p>{answer}</p>
-            <div>
-              <EditButton 
-                onClick={() => removeAnswer(index)}
-              />
-              <TrashButton 
-                onClick={() => removeAnswer(index)}
-              />
-            </div>
-          </CardContent>
-        ))
-      } */}
     </Container>
   );
 };

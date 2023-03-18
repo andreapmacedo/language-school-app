@@ -32,37 +32,8 @@ const QuestionForm = () => {
   };
 
   const [queryAdd, setQueryAdd] = useState(initialQuery); 
-  const [questionTags, setQuestionTags] = useState<string[]>([]);
-  const [dbTags, setDbTags] = useState([]);
-  
-  const [dbTagChange, setDbTagChange] = useState(false);
-
   const [questionAdded, setQuestionAdded] = useState(false);
 
-
-  // function addTagToQuestion(tagToAdd: string): void {
-  //   setQuestionTags([...questionTags, tagToAdd]);
-  //   setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
-  // }
-
-  // function setAddTagToDB(): void {
-  //   if(tagInput === '') return;
-  //   if(dbTags.find(({tag}) => tag === tagInput)) {
-  //     alert('Tag already exists');
-  //     return;
-  //   }
-  //   if(questionTags.find((qt) => qt === tagInput)) {
-  //     alert('Tag already exists in question');
-  //     return;
-  //   }
-  //   addTagToDB({tag: tagInput});    
-  //   setDbTagChange(!dbTagChange);
-    
-  //   // getTagsFromDB().then((tags) => {
-  //   //   setDbTags(tags);
-  //   // });
-  //   setTagInput('');
-  // }
 
   function validateInputs() {
 
@@ -89,39 +60,8 @@ const QuestionForm = () => {
     setQueryAdd(query);
   }
 
-
-  // useEffect(() => {
-  //   updateQuery({
-  //     ...queryAdd,
-  //     tags: questionTags.map((tag) => tag)
-  //   });
-  // }, [questionTags]);
-
-  /**
-   * Get tags from DB when component is mounted
-   */
-  // useEffect(() => {
-  //   getTagsFromDB().then((tags) => {
-  //     setDbTags(tags);
-  //   });
-  // }, []); 
-
-  /*
-  quando adiciona uma tag aod db, recarrega as tags do db
-  */
-  useEffect(() => {
-    getTagsFromDB().then((tags) => {
-      // Remover os tags que foram adicionados a questão
-      const dbTags = tags.filter(({tag}) => !questionTags.includes(tag));
-      setDbTags(dbTags);
-    });
-  }, [dbTagChange]);
-
-
   const handleQueryAddInput = ({target} : any) => {
-
     const { value, name } = target;
-    // console.log('handleQueryAddInput', name, value);
     // if (name === 'title') {
     //   setTask({...task, title: value });
     // }
@@ -129,7 +69,6 @@ const QuestionForm = () => {
   };
 
   const handleSelectInput = (selectedItem: any) => {
-    // console.log('handleSelectInput', selectedItem);
     const { value, name } = selectedItem;
     setQueryAdd({...queryAdd, [name]: value });
   };

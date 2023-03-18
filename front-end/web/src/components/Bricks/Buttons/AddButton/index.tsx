@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from './styles';
+import { Container, Button } from './styles';
 import { MdAddCircleOutline } from 'react-icons/md';
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
   color?: string;
   size?: number;
   disabled?: boolean;
+  textColor?: string;
 }
 
 const AddButton: React.FC<Props> = ({
@@ -15,19 +16,24 @@ const AddButton: React.FC<Props> = ({
   text,
   color,
   size,
-  disabled }) => {
+  disabled,
+  textColor = '#3a77ff',
+}) => {
 
   return (
-    <Container
-      onClick={onClick}
-      disabled={disabled}
-      style={{ color: color || '#eee' }} 
-    >
-      <MdAddCircleOutline 
-        size={size || 18}
-        // color={color || '#eee'}
-      /> 
-      {text && text}
+    <Container>
+      <Button
+        onClick={onClick}
+        disabled={disabled}
+        textColor={textColor}
+        // style={{ color: color || '#eee' }} 
+      >
+        <MdAddCircleOutline 
+          size={size || 18}
+          // color={color || '#eee'}
+        /> 
+        {text && text}
+      </Button>
     </Container>    
   );
 };

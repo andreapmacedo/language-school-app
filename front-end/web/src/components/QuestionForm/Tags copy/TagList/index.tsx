@@ -1,4 +1,7 @@
+import React, {useState} from 'react';
 import { Container, TagWrapper, TagLeft, TagRight } from './styles';
+
+
 
 interface Props {
   questionTags: string[];

@@ -1,62 +1,57 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import TrashButton from '../../../Bricks/Buttons/TrashButton';
 import EditButton from '../../../Bricks/Buttons/EditButton';
 import CancelButton from '../../../Bricks/Buttons/CancelButton';
 import AddButton from '../../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import TagList from '../TagList';
-import CollapsedHeader from '../../../CollapsedHeader';
-import Tag from '../Tag';
-
-import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../../../firebase/tags';
 
 import { HiTrash } from 'react-icons/hi';
 
 // import Modal from "react-modal";
 
-import { Container, CollapsedContent, ControllerPanel,
-  TagsContainer
+import { Container, CardContent, CollapsedContent, ControllerPanel,
+  TagWrapper, TagLeft, TagRight
 } from './styles';
 
 // Modal.setAppElement('#root');
 
 interface Props {
-  questionAdded: boolean;
-  updateQuery: (query: any) => void;
-  queryAdd: object;
+  questionTags: string[];
+  removeTag: (index: number, tag: string) => void;
+  addTagToQuestion: (tag: string) => void;
+  dbTags: {tag: string}[];
+  addTagOpen: boolean;
+  tagInput: string;
+
+  setRemoveTagFromDB: (index: number) => void;
+  setDbTags: () => void;
+  setAddTagToDB: () => void;
+  setAddTagOpen: (e: boolean) => void;
+  setTagInput: (e: string) => void;
+
 }
 
 const TagContent: React.FC<Props> = ({
-  questionAdded,
-  updateQuery,
-  queryAdd,
+  questionTags,
+  removeTag,
+  setDbTags,
+  addTagToQuestion,
+  setRemoveTagFromDB,
+  setAddTagOpen,
+  setTagInput,
+  tagInput,
+  addTagOpen,
+  setAddTagToDB,
+  dbTags,
+
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const [questionTags, setQuestionTags] = useState<string[]>([]);
-// const [tagInput, setTagInput] = useState('');
+  // const [questionTags, setQuestionTags] = useState<string[]>([]);
 
-const [dbTags, setDbTags] = useState([]);
-  
-// const [dbTagChange, setDbTagChange] = useState(false);
 
-useEffect(() => {
-  getTagsFromDB().then((tags) => {
-    setDbTags(tags);
-  });
-}, []); 
-
-useEffect(() => {
-  setQuestionTags([]);
-}, [questionAdded]);
-
-useEffect(() => {
-  updateQuery({
-    ...queryAdd,
-    tags: questionTags.map((tag) => tag)
-  });
-}, [questionTags]);
 
 
   // const openModal = () => {
@@ -68,37 +63,6 @@ useEffect(() => {
   //   // setModalModeUpdate(false)
   //   // setTask(schedule);
   // }
-
-  function addTagToQuestion(tagToAdd: string): void {
-    setQuestionTags([...questionTags, tagToAdd]);
-    setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
-  }
-
-  const setRemoveTagFromDB = (index: number) => {
-    // alerta com confirmação
-    if (window.confirm('Are you sure you wish to delete this item?')) {
-      
-      const { id } = dbTags[index];
-      removeTagFromDB(id);
-      const newTags = [...dbTags];
-      newTags.splice(index, 1);
-      setDbTags(newTags);
-    }
-  }
-
-
-
-  const removeQuestionTag = (index: number, tag: string) => {
-    // console.log('removeQuestionTag', index, tag);
-    // console.log('dbTags', dbTags);
-    // alerta com confirmação
-    // if (window.confirm('Are you sure you wish to delete this item?')) {
-      const newTags = [...questionTags];
-      newTags.splice(index, 1);
-      setQuestionTags(newTags);
-      setDbTags([...dbTags, {tag}]);
-    // }
-  }
 
 
   const cancelOnClickHandler = () => {
@@ -113,25 +77,40 @@ useEffect(() => {
 
   return (
     <Container>
-      <CollapsedHeader
-        title='Add Tag'
-        setIsCollapsed={setIsCollapsed}
-        isCollapsed={isCollapsed}
-      />
+      {!isCollapsed &&
+        <AddButton 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          // onClick={openModal}
+          text='Add Tags'
+          color='#eee'
+        />
+      }
+
         {isCollapsed &&
           <CollapsedContent>
-            <TagsContainer>
-              {dbTags?.map(({tag}, index) => (
-                
-                <Tag
-                  tag={tag}
-                  key={index}
-                  index={index}
-                  // remove={removeQuestionTag} 
-                  add={addTagToQuestion}
-                />
-              ))}
-            </TagsContainer>
+
+
+          {
+                <div>
+                {dbTags?.map(({tag}, index) => (
+                  <TagWrapper key={index}>
+                    <TagLeft
+                      onClick={() => addTagToQuestion(tag)}  
+                    >{tag}</TagLeft>
+                    <TagRight
+                      onClick={() => setRemoveTagFromDB(index)}
+                    >
+                      <HiTrash 
+                        style={{
+                          color:  "#d15a5a",
+                        }}
+                      />
+                    </TagRight>
+                  </TagWrapper>
+                ))}
+              </div>
+          }
+
 
             <ControllerPanel>
               {/* <GenericButton
@@ -212,21 +191,7 @@ useEffect(() => {
 
 
 
-      {/* <TagList questionTags={questionTags} removeTag={removeQuestionTag} /> */}
-      
-      <TagsContainer>
-        {questionTags?.map((tag, index) => (
-          <Tag
-            tag={tag}
-            key={index}
-            index={index}
-            remove={removeQuestionTag} 
-            // add={addTagToQuestion}
-          />
-        ))}
-      </TagsContainer>      
-      
-      
+      <TagList questionTags={questionTags} removeTag={removeTag} />
       {/* {questionTags.map((tag, index) => (
       <TagWrapper key={index}>
         <TagLeft>{tag}</TagLeft>

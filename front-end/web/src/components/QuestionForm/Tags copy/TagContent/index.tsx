@@ -14,8 +14,8 @@ import { HiTrash } from 'react-icons/hi';
 
 // import Modal from "react-modal";
 
-import { Container, CollapsedContent, ControllerPanel,
-  TagsContainer
+import { Container, CardContent, CollapsedContent, ControllerPanel,
+  TagWrapper, TagLeft, TagRight
 } from './styles';
 
 // Modal.setAppElement('#root');
@@ -119,19 +119,31 @@ useEffect(() => {
         isCollapsed={isCollapsed}
       />
         {isCollapsed &&
+          
           <CollapsedContent>
-            <TagsContainer>
-              {dbTags?.map(({tag}, index) => (
-                
-                <Tag
-                  tag={tag}
-                  key={index}
-                  index={index}
-                  // remove={removeQuestionTag} 
-                  add={addTagToQuestion}
-                />
-              ))}
-            </TagsContainer>
+            {dbTags?.map(({tag}, index) => (
+              
+              <Tag
+                tag={tag}
+                key={index}
+                index={index}
+                remove={removeQuestionTag} 
+              />
+              // <TagWrapper key={index}>
+              //   <TagLeft
+              //     onClick={() => addTagToQuestion(tag)}  
+              //   >{tag}</TagLeft>
+              //   <TagRight
+              //     onClick={() => setRemoveTagFromDB(index)}
+              //   >
+              //     <HiTrash 
+              //       style={{
+              //         color:  "#d15a5a",
+              //       }}
+              //     />
+              //   </TagRight>
+              // </TagWrapper>
+            ))}
 
             <ControllerPanel>
               {/* <GenericButton
@@ -212,21 +224,7 @@ useEffect(() => {
 
 
 
-      {/* <TagList questionTags={questionTags} removeTag={removeQuestionTag} /> */}
-      
-      <TagsContainer>
-        {questionTags?.map((tag, index) => (
-          <Tag
-            tag={tag}
-            key={index}
-            index={index}
-            remove={removeQuestionTag} 
-            // add={addTagToQuestion}
-          />
-        ))}
-      </TagsContainer>      
-      
-      
+      <TagList questionTags={questionTags} removeTag={removeQuestionTag} />
       {/* {questionTags.map((tag, index) => (
       <TagWrapper key={index}>
         <TagLeft>{tag}</TagLeft>

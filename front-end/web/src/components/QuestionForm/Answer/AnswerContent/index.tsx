@@ -6,6 +6,7 @@ import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
 import AnswerAddInputArea from '../AnswerAddInputArea';
 import AnswerCard from '../AnswerCard';
+import CollapsedHeader from '../../../CollapsedHeader';
 
 import { IAnswer } from '../../../../interfaces';
 
@@ -80,13 +81,11 @@ const AnswerContent: React.FC<Props> = ({
 
   return (
     <Container>
-      {!isCollapsed &&
-        <AddButton 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          text='Add Answer'
-          color='#eee'
-        />
-      }
+      <CollapsedHeader
+        title='Add Answer'
+        setIsCollapsed={setIsCollapsed}
+        isCollapsed={isCollapsed}
+      />
         {isCollapsed &&
           <CollapsedContent>
             <AnswerAddInputArea

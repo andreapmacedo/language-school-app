@@ -7,6 +7,8 @@ import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import TagList from '../TagList';
 import CollapsedHeader from '../../../CollapsedHeader';
 import Tag from '../Tag';
+import TagManagement from '../TagManagement';
+
 
 import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../../../firebase/tags';
 
@@ -32,7 +34,7 @@ const TagContent: React.FC<Props> = ({
   queryAdd,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [questionTags, setQuestionTags] = useState<string[]>([]);
 // const [tagInput, setTagInput] = useState('');
@@ -145,6 +147,7 @@ useEffect(() => {
                 text='cancel'
               />
             </ControllerPanel>
+            <TagManagement />
           </CollapsedContent>
         }
 

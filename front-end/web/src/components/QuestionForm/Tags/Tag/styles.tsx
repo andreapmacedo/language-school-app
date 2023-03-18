@@ -21,21 +21,11 @@ export const TagLeft = styled.div`
 `;
 
 export const TagRight = styled.div`
-
   display: flex;
   background-color: #fff;
-  /* padding-left: 8px; */
-  /* padding: 2px; */
   border-left: 0;
-  
   border-color: #114677;
-  /* border-style: solid; */
-  /* border-radius: 0 16px 16px 0; */
-  border-radius: 16px;
-  /* background-color: #ddd; */
-  /* width: 16px;
-  height: 16px; */
-  
+  border-radius: 16px;  
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -51,7 +41,6 @@ export const TagRight = styled.div`
     justify-content: center;
     text-align: center;
     font-size: 12px;
-    
     color: #000;
     font-weight: bold;
     cursor: pointer;

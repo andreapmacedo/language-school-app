@@ -1,23 +1,22 @@
 import { Container } from './styles';
-
-import { addTagToDB, getTagsFromDB, removeTagFromDB } from '../../../../firebase/tags';
-
 import TagModal from '../TagModal';
 
 interface Props {
-  
-
+  setDbTagChange: (e: boolean) => void;
+  dbTagChange: boolean;
 }
 
 const TagManagement: React.FC<Props> = ({
-
-
+  setDbTagChange,
+  dbTagChange,
 }) => {
 
   return (
     <Container>
-      <TagModal />
-      {/* aqui seria a hora do modal */}
+      <TagModal 
+        setDbTagChange={setDbTagChange}
+        dbTagChange={dbTagChange}
+      />
     </Container>
   );
 };

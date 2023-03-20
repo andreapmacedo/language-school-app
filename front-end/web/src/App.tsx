@@ -1,16 +1,11 @@
-import './App.css'
-// import Home from './pages/Home'
-import Questions from './pages/QuestionForm'
+import GlobalStyles from './styles/GlobalStyles'
 import AppRoutes from './routes'
 
 function App() {
-  
-
   return (
     <>
+      <GlobalStyles />
       <AppRoutes />
-      {/* <Questions /> */}
-      {/* <Home /> */}
     </>
   )
 }

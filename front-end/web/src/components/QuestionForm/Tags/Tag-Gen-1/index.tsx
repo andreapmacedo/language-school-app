@@ -1,13 +1,11 @@
 import { Container, TagLeft, TagRight } from './styles';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { IconType } from 'react-icons';
 
 interface Props {
   tag: string;
   index: number;
   add?: (tag: string) => void;
   remove?: (index: number, tag: string) => void;
-  icon?: IconType;
 }
 
 const Tag: React.FC<Props> = ({
@@ -15,7 +13,6 @@ const Tag: React.FC<Props> = ({
   index,
   add,
   remove,
-  icon: Icon,
 }) => {
 
   return (
@@ -26,10 +23,12 @@ const Tag: React.FC<Props> = ({
         {tag}
       </TagLeft>
       { remove && 
-        <TagRight
-        onClick={() => remove(index, tag)}
-        >
-          {Icon && <Icon className='icon'/>}
+        <TagRight>
+          <AiOutlineCloseCircle
+            size={20}
+            color="#114677"
+            onClick={() => remove(index, tag)} 
+          />
         </TagRight>
       }
     </Container>

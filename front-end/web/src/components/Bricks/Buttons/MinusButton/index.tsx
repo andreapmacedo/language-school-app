@@ -1,25 +1,25 @@
 import React from 'react';
 import { Container, Button } from './styles';
-import { IconType } from 'react-icons';
+import { MdAddCircleOutline } from 'react-icons/md';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
 
 interface Props {
   onClick: () => void;
-  icon?: IconType;
   text?: string;
   color?: string;
   size?: number;
   disabled?: boolean;
-  textColor?: string; 
+  textColor?: string;
 }
 
-const GenericButton: React.FC<Props> = ({
+const MinusButton
+: React.FC<Props> = ({
   onClick,
   text,
   color,
   size,
-  textColor = '#3a77ff', // define a cor padrão do texto
-  icon: Icon, 
-  disabled 
+  disabled,
+  textColor = '#3a77ff',
 }) => {
 
   return (
@@ -27,15 +27,19 @@ const GenericButton: React.FC<Props> = ({
       <Button
         onClick={onClick}
         disabled={disabled}
-        textColor={textColor} // passa a cor do texto para o CSS
+        textColor={textColor}
         // style={{ color: color || '#eee' }} 
       >
-        {Icon && <Icon className='icon'/>}
+        <AiOutlineMinusCircle 
+          size={size || 18}
+          // color={color || '#eee'}
+        /> 
         {text && text}
-      </Button>    
-    </Container>
+      </Button>
+    </Container>    
   );
 };
 
-export default GenericButton;
+export default MinusButton
+;
 

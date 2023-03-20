@@ -15,15 +15,11 @@ export const Container = styled.div`
 export const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* width: 100%; */
-  /* border-radius: 3px; */
-  /* background-color: #2f2b3df5; */
-  /* background-color: #2fd; */
+  justify-content: center;
 `;
 
 export const CardContent = styled.div`
   display: flex;
-  /* flex-direction: column; */
   background-color: #fff;
   margin-bottom: 10px;
   padding: 2px 8px;

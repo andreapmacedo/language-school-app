@@ -1,6 +1,11 @@
 import { Container } from './styles';
 import { MdKeyboardArrowUp, MdKeyboardArrowLeft } from 'react-icons/md';
 import AddButton from '../Bricks/Buttons/project/AddButton';
+import MinusButton from '../Bricks/Buttons/MinusButton';
+import GenericButton from '../Bricks/Buttons/project/GenericButton';
+import { MdAddCircleOutline } from 'react-icons/md';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
+
 
 interface Props {
   isCollapsed: boolean;
@@ -8,7 +13,7 @@ interface Props {
   setIsCollapsed: (isCollapsed: boolean) => void;
 }
 
-const TagList: React.FC<Props> = ({
+const CollapsedHeader: React.FC<Props> = ({
   isCollapsed,
   setIsCollapsed,
   title,
@@ -16,11 +21,39 @@ const TagList: React.FC<Props> = ({
 
   return (
     <Container>
-        <AddButton 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          text={title}
-          color='#eee'
-        />
+
+          {/* {isCollapsed
+            ? 
+            <AddButton 
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              text={title}
+              color='#eee'
+            />
+            :
+            <MinusButton 
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              text={title}
+              color='#eee'
+            />            
+          }    */}
+          {isCollapsed
+            ? 
+            <GenericButton 
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              text={title}
+              textColor='#eee'
+              icon={AiOutlineMinusCircle}
+              />
+            :
+            <GenericButton 
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              text={title}
+              textColor='#eee'
+              icon={MdAddCircleOutline}
+            />            
+          }   
+
+
         <div
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
@@ -35,4 +68,4 @@ const TagList: React.FC<Props> = ({
   );
 };
 
-export default TagList;
+export default CollapsedHeader;

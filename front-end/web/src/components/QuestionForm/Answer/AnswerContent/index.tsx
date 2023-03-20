@@ -82,7 +82,7 @@ const AnswerContent: React.FC<Props> = ({
   return (
     <Container>
       <CollapsedHeader
-        title='Add Answer'
+        title='Answers'
         setIsCollapsed={setIsCollapsed}
         isCollapsed={isCollapsed}
       />

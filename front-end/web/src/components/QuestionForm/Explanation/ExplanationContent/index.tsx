@@ -57,7 +57,7 @@ const ExplanationContent: React.FC<Props> = ({
   return (
     <Container>
       <CollapsedHeader
-        title='Add Explanation'
+        title='Explanations'
         setIsCollapsed={setIsCollapsed}
         isCollapsed={isCollapsed}
       />

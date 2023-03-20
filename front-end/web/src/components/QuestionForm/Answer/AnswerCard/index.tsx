@@ -6,7 +6,8 @@ import CancelButton from '../../../Bricks/Buttons/CancelButton';
 import AddButton from '../../../Bricks/Buttons/project/AddButton';
 import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
-import AddInputArea from '../../GenericAddInputArea';
+// import AddInputArea from '../../GenericAddInputArea';
+import AddInputArea from '../../../Bricks/project/GenericAddInputArea';
 import AnswerAddInputArea from '../AnswerAddInputArea';
 
 

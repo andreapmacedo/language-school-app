@@ -5,7 +5,7 @@ import EditButton from '../../../Bricks/Buttons/EditButton';
 import CancelButton from '../../../Bricks/Buttons/CancelButton';
 import GenericButton from '../../../Bricks/Buttons/GenericButton';
 import { GiCheckMark } from 'react-icons/gi';
-import GenericAddInputArea from '../../GenericAddInputArea';
+import GenericAddInputArea from '../../../Bricks/project/GenericAddInputArea';
 import CollapsedHeader from '../../../CollapsedHeader';
 
 

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import CollapsedHeader from '../../../CollapsedHeader';
 import Tag from '../Tag';
-import TagManagement from '../TagManagement';
-
+import ModalContainer from '../ModalContainer';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 import { getTagsFromDB, removeTagFromDB } from '../../../../firebase/tags';
 
@@ -62,19 +62,6 @@ useEffect(() => {
     setDbTags(dbTags.filter(({tag}) => tag !== tagToAdd));
   }
 
-  const setRemoveTagFromDB = (index: number) => {
-    // alerta com confirmação
-    if (window.confirm('Are you sure you wish to delete this item?')) {
-      const { id } = dbTags[index];
-      removeTagFromDB(id);
-      const newTags = [...dbTags];
-      newTags.splice(index, 1);
-      setDbTags(newTags);
-    }
-  }
-
-
-
   const removeQuestionTag = (index: number, tag: string) => {
     // console.log('removeQuestionTag', index, tag);
     // console.log('dbTags', dbTags);
@@ -101,7 +88,7 @@ useEffect(() => {
   return (
     <Container>
       <CollapsedHeader
-        title='Add Tag'
+        title='Tags'
         setIsCollapsed={setIsCollapsed}
         isCollapsed={isCollapsed}
       />
@@ -119,7 +106,7 @@ useEffect(() => {
                 />
               ))}
             </TagsContainer>
-            <TagManagement 
+            <ModalContainer 
               setDbTagChange={setDbTagChange}
               dbTagChange={dbTagChange}
             />
@@ -131,6 +118,7 @@ useEffect(() => {
             tag={tag}
             key={index}
             index={index}
+            icon={AiOutlineCloseCircle}
             remove={removeQuestionTag} 
             // add={addTagToQuestion}
           />

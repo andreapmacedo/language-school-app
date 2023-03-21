@@ -1,4 +1,11 @@
-import { Container } from './styles';
+
+import Toggle from '../Toggle';
+import { 
+  Container,
+  Profile,
+  Welcome,
+  UserName,
+} from './styles';
 
 
 interface Props {
@@ -11,7 +18,11 @@ const MainHeader: React.FC<Props> = ({
 
   return (
     <Container>
-      <h1>MainHeader</h1>
+      <Toggle />
+      <Profile>
+        <Welcome>Olá</Welcome>
+        <UserName>André Macedo</UserName>
+      </Profile>
     </Container>
   );
 };
